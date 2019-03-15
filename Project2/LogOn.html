@@ -2,11 +2,43 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!---<script src="JavaScript.js"></script>-->
+    <!---<link rel="stylesheet" type="text/css" href="Stylesheet_TutoringProject.css">-->
+    <title>LogOn</title>
+    <style>
+
+        * {
+            background-color: #FFB347;
+        }
+
+        #loginForm {
+            border-style: solid;
+            border-width: 5px;
+            border-color: #CC6BB1;
+            height: auto;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        form {
+            width: 50%;
+            margin: 10px auto;
+        }
+    </style>
 </head>
 <body>
-
     <h1>Welcome!</h1>
+
+    <div id="loginForm">
+        <form>
+            UserName:<br>
+            <input type="text" name="username"><br>
+            Password:<br>
+            <input type="text" name="password"><br>
+            <button>Log in!</button>
+        </form>
+    </div>
     
 </body>
 </html>
