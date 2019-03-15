@@ -25,10 +25,15 @@ namespace Project2
         public int NumberOfAccounts()
         {
             int x = 0;
-            string sqlConectionString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
             string sqlSelect = "SELECT * from users";
-            //MySqlConnection sqlConnection
-            return x;
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+            sqlDa.Fill(sqlDt);
+            return sqlDt.Rows.Count;
         }
     }
 }
