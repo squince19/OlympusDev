@@ -24,7 +24,6 @@ namespace Project2
         [WebMethod]
         public int NumberOfAccounts()
         {
-            int x = 0;
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
             string sqlSelect = "SELECT * from users";
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
@@ -37,7 +36,7 @@ namespace Project2
         }
 
         [WebMethod(EnableSession = true)]
-        public bool LogOn(string username, string password)
+        public bool LogOn(string username, string userPassword)
         {
             bool success = false;
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
@@ -45,7 +44,7 @@ namespace Project2
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(username));
-            sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(password));
+            sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(userPassword));
             MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
             DataTable sqlDt = new DataTable();
             sqlDa.Fill(sqlDt);

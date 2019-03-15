@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!---<script src="JavaScript.js"></script>-->
+    <script src="JavaScript.js"></script>
     <!---<link rel="stylesheet" type="text/css" href="Stylesheet_TutoringProject.css">-->
     <title>LogOn</title>
     <style>
@@ -33,10 +33,10 @@
     <div id="loginForm">
         <form>
             UserName:<br>
-            <input type="text" name="username"><br>
+            <input id="logonID" type="text" name="username"><br>
             Password:<br>
-            <input type="text" name="password"><br>
-            <button>Log in!</button>
+            <input id="logonPassword" type="text" name="password"><br>
+            <button type="button" onclick="LogOn($('#logonID').val(), $('#logonPassword').val()); return false;">Log in!</button>
         </form>
     </div>
     
