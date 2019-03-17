@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .columnContainer {
+            display: table;
+            width: 100%;
+        }
+
+        .column {
+            display: table-cell;
+            padding: 16px;
+        }
+
+        #employeeData {
+            background: red;
+            width: 25%;
+        }
+
+        #productivityData {
+            background: orange;
+            width: 50%;
+        }
+
+        #managerNotes {
+            background: yellow;
+            width: 25%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Div for Navigation bar at top of page -->
+    <div class="topNav" style="background: orange;">
+        <p>[top nav buttons/text boxes here]</p>
+    </div>
+
+    <!-- Div for formatting page content -->
+    <div class="columnContainer">
+        <div class="column" id="employeeData">
+            <h2><b>Last Name, First Name</b></h2>
+            <h3>[Employee ID]</h3>
+            <h3>[Department]</h3>
+            <h3>[Manager]</h3>
+        </div>
+
+        <div class="column" id="productivityData">
+            <h3>Productivity Dashboard</h3>
+        </div>
+
+        <div class="column" id="managerNotes">
+            <h3>Manager Notes</h3>
+        </div>
+    </div>
+
+</body>
+</html>
