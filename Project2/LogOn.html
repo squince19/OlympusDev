@@ -4,41 +4,52 @@
     <meta charset="utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="JavaScript.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!---<link rel="stylesheet" type="text/css" href="Stylesheet_TutoringProject.css">-->
     <title>LogOn</title>
     <style>
 
         * {
             background-color: #FFB347;
+            font-family: Calibri;
         }
 
         #loginForm {
+            background-color: white;
             border-style: solid;
             border-width: 5px;
-            border-color: #CC6BB1;
+            border-color: wheat;
             height: auto;
             width: 300px;
             margin: 0 auto;
+            margin-top: 0px;
         }
 
         form {
-            width: 50%;
+            background-color: white;
             margin: 10px auto;
+            margin-left: 3%;
+        }
+
+        input {
+            width: 90%;
+            background-color: white;
+            margin: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome!</h1>
-
+    <p style="text-align: center; margin-top: 12%; font-size: xx-large; color: darkslategray;"><b>Olympus</b>PS</p>
     <div id="loginForm">
         <form>
-            UserName:<br>
-            <input id="logonID" type="text" name="username"><br>
-            Password:<br>
-            <input id="logonPassword" type="text" name="password"><br>
-            <button type="button" onclick="LogOn($('#logonID').val(), $('#logonPassword').val()); return false;">Log in!</button>
+            <h6 style="text-align: center; margin: 15px auto; background-color: white;">Sign to start your session</h6>
+            <i style="background-color: white; " class="fa fa-user"></i>
+            <input id="logonID" type="text" name="username" placeholder="Username"><br>
+            <i style="background-color: white; " class="fa fa-lock"></i>
+            <input id="logonPassword" type="text" name="password" placeholder="Password" /> <br>
+            <button style="background-color: #FFEED2; margin: 10px auto; display: block;" type="button" onclick="LogOn($('#logonID').val(), $('#logonPassword').val()); return false;">Log in</button>
         </form>
     </div>
-    
+
 </body>
 </html>
