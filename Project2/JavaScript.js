@@ -12,6 +12,8 @@
         success: function (msg) {
             if (msg.d) {
                 alert("Login Successful")
+                window.location.href = 'EmployeeData.html';
+
                 
             }
             else {
