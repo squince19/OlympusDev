@@ -3,7 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+        * {
+            background-color: #FFB347;
+            font-family: Calibri;
+        }
+
         .columnContainer {
             display: table;
             width: 100%;
@@ -15,42 +21,72 @@
         }
 
         #employeeData {
-            background: red;
+            background: #FFDF9E;
             width: 25%;
+            border-radius: 15px;
+        }
+
+        #employeeData h4 {
+            background: #FFDF9E;
+        }
+
+        #employeeData h4 b {
+            background: #FFDF9E;
         }
 
         #productivityData {
-            background: orange;
+            background: #FFB347;
             width: 50%;
         }
 
         #managerNotes {
-            background: yellow;
+            background: #FFDF9E;
             width: 25%;
+            border-radius: 15px;
+        }
+        #managerNotes p{
+            background: #FFDF9E;
+        }
+        .icon {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            background-color: #FF971A;
+        }
+        i {
+            background-color: #FF971A;
         }
     </style>
 </head>
 <body>
+
     <!-- Div for Navigation bar at top of page -->
-    <div class="topNav" style="background: orange;">
-        <p>[top nav buttons/text boxes here]</p>
+    <div class="topNav" style="background: #FF971A;">
+        <h1 style="text-align:center; margin-top: 0px; background-color:#FF971A;">My Manager Dashboard        
+        <button class="icon" ><i style=" font-size: 24px;" class="fa fa-home"></i></button>
+        <button class="icon" ><i style=" font-size: 24px;" class="fa fa-search"></i></button>
+        <button class="icon" ><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
+        </h1>
     </div>
 
     <!-- Div for formatting page content -->
     <div class="columnContainer">
         <div class="column" id="employeeData">
-            <h2><b>Last Name, First Name</b></h2>
-            <h3>[Employee ID]</h3>
-            <h3>[Department]</h3>
-            <h3>[Manager]</h3>
+            <h3 style="background-color: #FFDF9E;">Employee Information:</h3>
+            <h4><b>[Full Name]: Doe, John</b></h4>
+            <h4>[Employee ID]: 123910</h4>
+            <h4>[Department]: Call Center</h4>
+            <h4>[Manager]: Jane Doe</h4>
         </div>
 
         <div class="column" id="productivityData">
             <h3>Productivity Dashboard</h3>
+            <p><img src="images\test.png" alt="test image"</p>
         </div>
 
         <div class="column" id="managerNotes">
-            <h3>Manager Notes</h3>
+            <h3 style="background-color: #FFDF9E;">Manager Notes</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
         </div>
     </div>
 

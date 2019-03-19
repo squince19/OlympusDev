@@ -93,6 +93,7 @@
   <ItemGroup>
     <Content Include="EmployeeData.html" />
     <Content Include="Global.asax" />
+    <Content Include="images\test.png" />
     <Content Include="JavaScript.js" />
     <Content Include="LogOn.html" />
     <Content Include="Web.config" />
