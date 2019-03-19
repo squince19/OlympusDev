@@ -56,6 +56,21 @@ namespace Project2
             }
 
             return success;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public List<Employee> GetNames()
+        { 
+            //WEB METHOD IN PROGRESS
+            List<Employee> Employees = new List<Employee>();
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            string sqlSelect = "SELECT DISTINCT FirstName, LastName from Employees";
+
+            return Employees;
+
+        
+
 
         }
     }
