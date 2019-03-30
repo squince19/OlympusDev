@@ -65,7 +65,24 @@ namespace Project2
             List<Employee> Employees = new List<Employee>();
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-            string sqlSelect = "SELECT DISTINCT FirstName, LastName from Employees";
+            string sqlSelect = "SELECT DISTINCT FName, LName from employee_data";
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+            sqlDa.Fill(sqlDt);
+
+            int count = sqlDt.Rows.Count;
+
+            foreach(DataRow row in sqlDt.Rows)
+            {
+                Employee tempEmployee = new Employee();
+                tempEmployee.fname = row["FName"].ToString();
+                tempEmployee.lname = row["LName"].ToString();
+                Employees.Add(tempEmployee)
+            }
+
 
             return Employees;
 
