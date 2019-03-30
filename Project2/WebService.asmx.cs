@@ -91,8 +91,26 @@ namespace Project2
         {
             List<Employee> searchResults = new List<Employee>();
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            string sqlSelect = "SELECT DISTINCT FName, LName from employee_data where FName LIKE '%" + name + "%' or LName LIKE '%" + name + "%'";
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+            sqlCommand.Parameters.AddWithValue("@name", HttpUtility.UrlDecode(name));
 
 
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+            sqlDa.Fill(sqlDt);
+
+            foreach(DataRow row in sqlDt.Rows)
+            {
+                Employee tempEmployee = new Employee();
+                tempEmployee.fname = row["FName"].ToString();
+                tempEmployee.lname = row["LName"].ToString();
+                searchResults.Add(tempEmployee);
+            }
+
+
+            return searchResults;
 
         }
     }
