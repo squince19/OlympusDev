@@ -80,13 +80,18 @@ namespace Project2
                 Employee tempEmployee = new Employee();
                 tempEmployee.fname = row["FName"].ToString();
                 tempEmployee.lname = row["LName"].ToString();
-                Employees.Add(tempEmployee)
+                Employees.Add(tempEmployee);
             }
-
-
             return Employees;
 
-        
+        }
+
+        [WebMethod(EnableSession = true)]
+        public List<Employee> SearchEmployee(string name)
+        {
+            List<Employee> searchResults = new List<Employee>();
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+
 
 
         }
