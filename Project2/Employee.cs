@@ -16,6 +16,14 @@ namespace Project2
         public int workDateYear;
         public double productivityLevel;
         public string SLAColor;
+        public string ManagerName;
+        public int ManagerID;
+
+        public override string ToString()
+        {
+            return fname + " " + lname;
+        }
+
 
 
 
