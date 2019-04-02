@@ -11,7 +11,6 @@
         //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
             if (msg.d) {
-                alert("Login Successful")
                 window.location.href = 'EmployeeData.html';
 
                 
