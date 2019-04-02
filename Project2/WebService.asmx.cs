@@ -40,7 +40,7 @@ namespace Project2
         {
             bool success = false;
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-            string sqlSelect = "SELECT username, userPassword FROM users WHERE username=@idValue and userPassword=@passValue";
+            string sqlSelect = "SELECT username, userPassword, employeeID FROM users WHERE username=@idValue and userPassword=@passValue";
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(username));
@@ -52,10 +52,12 @@ namespace Project2
             if(sqlDt.Rows.Count > 0)
             {
                 Session["loggedIn"] = "true";
+                Session["userID"] = sqlDt.Rows[0]["employeeID"];
                 success = true;
             }
 
             return success;
+
         }
 
         [WebMethod(EnableSession = true)]
@@ -63,9 +65,10 @@ namespace Project2
         { 
             //WEB METHOD IN PROGRESS
             List<Employee> Employees = new List<Employee>();
+            string userID = Session["userID"].ToString();
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-            string sqlSelect = "SELECT DISTINCT FName, LName from employee_data";
+            string sqlSelect = "SELECT DISTINCT FName, LName, employeeID from employee_data WHERE ManagerID = " + userID;
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
@@ -80,6 +83,7 @@ namespace Project2
                 Employee tempEmployee = new Employee();
                 tempEmployee.fname = row["FName"].ToString();
                 tempEmployee.lname = row["LName"].ToString();
+                tempEmployee.employeeId = Convert.ToInt32(row["employeeID"]);
                 Employees.Add(tempEmployee);
             }
             return Employees;
@@ -109,9 +113,10 @@ namespace Project2
                 searchResults.Add(tempEmployee);
             }
 
-
             return searchResults;
 
         }
+
+        
     }
 }

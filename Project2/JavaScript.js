@@ -29,7 +29,7 @@ var employeeArray;
 
 
 //function in progress SQ
-function LoadEmployees() {
+function LoadEmployees(id) {
     var webMethod = "WebService.asmx/GetNames";
     $.ajax({
         type: "POST",
@@ -38,13 +38,17 @@ function LoadEmployees() {
         dataType: "json",
         //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
+            alert("success");
             if (msg.d) {
 
                 employeeArray = msg.d;
                 for (i = 0; i < employeeArray.length; i++) {
+                    var scrollBar = document.getElementById(id);
                     var pNode = document.createElement('p');
+                    
                     pValue = employeeArray[i].fname + " " + employeeArray[i].lname;
                     pNode.innerHTML = pValue;
+                    scrollBar.appendChild(pNode);
                     
                 }
             }

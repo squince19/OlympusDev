@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="JavaScript.js"></script>
+
     <style>
 
         * {
@@ -33,20 +37,20 @@
             padding-top: 0;
         }
 
-        #employeeData div {
-            background:white;
-            text-align: center;
-        }
+            #employeeData div {
+                background: white;
+                text-align: center;
+            }
 
-        #managerNotes div {
-            background:white;
-        }
+            #managerNotes div {
+                background: white;
+            }
 
-        #managerNotes label {
-            background: white;
-        }
+            #managerNotes label {
+                background: white;
+            }
 
-        h3{
+        h3 {
             text-align: center;
             margin: auto;
             background-color: #FF971A;
@@ -64,7 +68,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="LoadEmployees('employeeScrollBar')">
 
     <!-- Div for Navigation bar at top of page -->
     <div style="background: #FF971A; width: 100%">
@@ -82,14 +86,14 @@
     <div class="columnContainer">
         <div class="column" id="employeeData">
             <h3>Employees</h3>
-            <div style="width:100%;height:400px;line-height:3em;overflow:scroll;">
-                This 'div' element uses 'overflow:scroll' to create scrollbars.
+            <div id="employeeScrollBar"style="width:100%;height:400px;line-height:3em;overflow:scroll;">
+                <p>Names</p>
             </div>
         </div>
 
         <div class="column" id="productivityData">
             <h3>Productivity Dashboard</h3>
-            <p><img src="images\test.png" alt="test image"</p>
+            <p><img src="images\test.png" alt="test image" /></p>
         </div>
 
         <div class="column" id="managerNotes">
