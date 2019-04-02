@@ -70,7 +70,7 @@
     <div style="background: #FF971A; width: 100%">
         <h1 style="text-align:center; background-color:#FF971A;">
             My Manager Dashboard
-            <button class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
+            <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
             <button class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
             <button class="icon"><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
         </h1>
@@ -109,3 +109,8 @@
 
 </body>
 </html>
+<script>
+    function ChangeToHomePage() {
+        window.location.href = "\LogOn.html"
+    }
+</script>
