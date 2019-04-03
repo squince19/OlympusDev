@@ -66,6 +66,17 @@
         i {
             background-color: #FF971A;
         }
+
+        #employeeData p, #managerNotes p{
+            background-color: white;
+            margin: 5px;
+            
+        }
+        #employeeData p:hover {
+            background-color: Highlight;
+            margin: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body onload="LoadEmployees()">
@@ -86,7 +97,7 @@
     <div class="columnContainer">
         <div class="column" id="employeeData">
             <h3>Employees</h3>
-            <div id="employeeScrollBar"style="width:100%;height:400px;line-height:3em;overflow:scroll;">
+            <div id="employeeScrollBar"style="width:100%;height:400px;line-height:3em;overflow-y:auto;">
                
             </div>
         </div>
@@ -98,14 +109,15 @@
 
         <div class="column" id="managerNotes">
             <h3>Manager Notes</h3>
-            <div style="width:100%;height:400px;line-height:3em;overflow:scroll;">
+            <div style="width:100%;height:400px;line-height:3em;overflow-y:auto;">
                 <Label id="empNameLbl">Name</Label>
                 <p id="employeeName"></p>
                 <br />
                 <Label id="departmentLbl">Department</Label>
+                <p id="deptName"></p>
                 <br />
+                <p id="prod"></p>
                 <br />
-                <Label id="managerLbl">Manager</Label>
                 <br />
             </div>
         </div>
