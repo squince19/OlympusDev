@@ -77,7 +77,7 @@ function LoadEmployees() {
                     var value = employeeArray[i].employeeId;
                     console.log(value);
                     pNode.setAttribute("id", value);
-                    pNode.setAttribute("onclick", GetInfo(value));
+                    pNode.setAttribute("onclick", "GetInfo(" + value + ")");
                     pValue = employeeArray[i].fname + " " + employeeArray[i].lname;
                     pNode.innerHTML = pValue;
                     scrollBar.appendChild(pNode);
