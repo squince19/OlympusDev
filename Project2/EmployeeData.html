@@ -11,7 +11,7 @@
     <style>
 
         * {
-            background-color: wheat;
+            background-color: #FFDF9E;
             font-family: Calibri;
             margin-top: 0;
             margin-left: 0;
@@ -20,13 +20,13 @@
 
         .columnContainer {
             display: table;
-            margin-left: 10px;
-            margin-right: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
         }
 
         .column {
             display: table-cell;
-            padding: 16px;
+            padding: 7px;
         }
 
         #employeeData, #managerNotes {
@@ -35,25 +35,34 @@
             padding-left: 0;
             padding-right: 0;
             padding-top: 0;
+
         }
 
-            #employeeData div {
+
+         #managerNotes ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        #employeeData div {
                 background: white;
                 text-align: center;
             }
 
-            #managerNotes div {
+       #managerNotes div {
                 background: white;
+                
             }
 
-            #managerNotes label {
+       #managerNotes label {
                 background: white;
             }
 
         h3 {
             text-align: center;
             margin: auto;
-            background-color: #FF971A;
+            background-color: white;
+            padding-bottom: 15px;
+            padding-top: 10px;
         }
 
         .icon {
@@ -67,28 +76,50 @@
             background-color: #FF971A;
         }
 
-        #employeeData p, #managerNotes p{
+        #managerNotes p, #managerNotes label{
             background-color: white;
-            margin: 5px;
+            margin: 0px;
+            margin-bottom: 5px;
+            margin-left: 15px;
             
+        }
+        #employeeData p {
+            background-color: white;
+            margin: 0px;
+            margin-bottom: 5px;
         }
         #employeeData p:hover {
             background-color: Highlight;
             margin: 5px;
             cursor: pointer;
         }
+        #header button{
+            display:inline-block;
+            float:right;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        #header * {
+            margin-bottom: 1px;
+            background-color: #FF971A;
+        }
+        button{
+            background-color: gray;
+        }
     </style>
 </head>
 <body onload="LoadEmployees()">
 
+
     <!-- Div for Navigation bar at top of page -->
-    <div style="background: #FF971A; width: 100%">
-        <h1 style="text-align:center; background-color:#FF971A;">
-            My Manager Dashboard
-            <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
-            <button class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
-            <button class="icon"><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
-        </h1>
+    <div id="header" style="background-color:#FF971A;">
+        <p style="margin-left: 15px; text-align: center; font-size: xx-large; color: darkslategray; display:inline-block; margin-right:25%"><b>Olympus</b>PS</p>
+        <h2 style="text-align:center; margin-left:3%; display: inline-block;">
+            Manager Dashboard
+        </h2>
+        <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
+        <button class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
+        <button class="icon"><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
     </div>
 
 
@@ -97,19 +128,19 @@
     <div class="columnContainer">
         <div class="column" id="employeeData">
             <h3>Employees</h3>
-            <div id="employeeScrollBar"style="width:100%;height:400px;line-height:3em;overflow-y:auto;">
-               
+            <div id="employeeScrollBar" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
+                <p id="allBtn" style="margin-left:0px;">All</p>
             </div>
         </div>
 
         <div class="column" id="productivityData">
             <h3>Productivity Dashboard</h3>
-            <p><img src="images\test.png" alt="test image" /></p>
+            <p style="height:500px; background-color:white;"><img src="images\test.png" alt="test image" /></p>
         </div>
 
         <div class="column" id="managerNotes">
             <h3>Manager Notes</h3>
-            <div style="width:100%;height:400px;line-height:3em;overflow-y:auto;">
+            <div style="width:100%; height:500px;line-height:3em;overflow-y:auto;">
                 <Label id="empNameLbl">Name</Label>
                 <p id="employeeName"></p>
                 <br />
@@ -118,6 +149,12 @@
                 <br />
                 <p id="prod"></p>
                 <br />
+                <p id="notes">Notes:</p>
+                <p>
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                </p>
+                <button style="position:inherit; margin-left: 75px; margin-top: 75px;">Edit Notes</button>
+                <button style="position:inherit; margin-left: 1px; margin-top: 15px;">Save</button>
                 <br />
             </div>
         </div>
