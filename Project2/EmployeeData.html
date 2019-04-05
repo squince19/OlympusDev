@@ -22,6 +22,8 @@
             display: table;
             margin-left: 5px;
             margin-right: 5px;
+            padding: 40px;
+            padding-top: 20px;
         }
 
         .column {
@@ -76,15 +78,16 @@
             background-color: #FF971A;
         }
 
-        #managerNotes p, #managerNotes label{
+        #managerNotes p, #managerNotes label {
             background-color: white;
+            font-size: small;
             margin: 0px;
             margin-bottom: 5px;
             margin-left: 15px;
-            
         }
         #employeeData p {
             background-color: white;
+            font-size: small;
             margin: 0px;
             margin-bottom: 5px;
         }
@@ -118,12 +121,13 @@
             Manager Dashboard
         </h2>
         <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
-        <button class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
         <button class="icon"><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
+        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px;height:34px; opacity: .6; background-color: wheat; "type="text" name="name" value="Search..." />
+        <button class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
     </div>
 
 
-
+    <h2 style="margin-left:100px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black">Welcome, [Insert Manager Name Here]</h2>
     <!-- Div for formatting page content -->
     <div class="columnContainer">
         <div class="column" id="employeeData">
