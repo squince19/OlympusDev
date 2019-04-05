@@ -11,10 +11,7 @@ namespace Project2
         public int employeeId;
         public string fname;
         public string lname;
-        public int workDateDay;
-        public int workDateMonth;
-        public int workDateYear;
-        public double productivityLevel;
+        public int[] productivityLevel;
         public string SLAColor;
         public string ManagerName;
         public int ManagerID;

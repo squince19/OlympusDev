@@ -21,6 +21,8 @@ namespace Project2
     public class WebService : System.Web.Services.WebService
     {
 
+        //FINISHED
+        //DUMMY WEB SERVICE
         [WebMethod]
         public int NumberOfAccounts()
         {
@@ -35,6 +37,7 @@ namespace Project2
             return sqlDt.Rows.Count;
         }
 
+        //FINSIHED
         [WebMethod(EnableSession = true)]
         public bool LogOn(string username, string userPassword)
         {
@@ -60,6 +63,8 @@ namespace Project2
 
         }
 
+        //FINISHED
+        //THIS RUNS WHEN THEPAGE IS LOADED, AND RETURNS A LIST OF EMPLOYEES FROM A SPECIFIC MANAGER
         [WebMethod(EnableSession = true)]
         public List<Employee> GetNames()
         { 
@@ -107,6 +112,8 @@ namespace Project2
 
         }
 
+        //FINISHED
+        //GETS INFORMATION FOR EVERY EMPLOYEE FOR PUTTING IN THE NOTES BOX
         [WebMethod(EnableSession = true)]
         public Employee GetEmployeeInformation(string employeeID)
         {
@@ -141,6 +148,44 @@ namespace Project2
             return emp;
         }
 
+        //IN PROGRESS
+        [WebMethod(EnableSession = true)]
+        public Employee[] EmployeeGraph()
+        {
+            Employee[] employeeInfo = new Employee[5];
+            int date = 7;
+            int position = 0;
+            int employeeCount;
+            int mgrid = Convert.ToInt32(Session["userID"]);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            string sqlSelect = 
+                "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, " +
+                "ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
+                    "FROM call_data_v2 cd, hours_worked hw, employee_data ed" +
+                        "where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
+                        "group by EmployeeID, \"Time Worked\"; ";
+            
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+            sqlDa.Fill(sqlDt);
+
+            employeeCount = sqlDt.Rows.Count;
+
+            //NEED TO COMPLETE FOR LOOP 
+            //THIS IS WHERE I LEFT OFF
+            foreach (DataRow row in sqlDt.Rows)
+            {
+                Employee temp = new Employee();
+                
+            }
+            return employeeInfo;
+        }
+
+        //FINISHED
         [WebMethod(EnableSession = true)]
         public List<Employee> SearchEmployee(string name)
         {
@@ -149,7 +194,7 @@ namespace Project2
             string sqlSelect = "SELECT DISTINCT FName, LName from employee_data where FName LIKE '%" + name + "%' or LName LIKE '%" + name + "%'";
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@name", HttpUtility.UrlDecode(name));
+            //sqlCommand.Parameters.AddWithValue("@name", HttpUtility.UrlDecode(name));
 
 
             MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
