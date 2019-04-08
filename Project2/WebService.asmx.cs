@@ -148,10 +148,16 @@ namespace Project2
             return emp;
         }
 
-        //IN PROGRESS
+        //FINISHED
+        //NEED TO REVIEW DATABASE TO CHECK FOR INVALID DATA
+        //INVALID DATA FOR JOSEPH LOCK
         [WebMethod(EnableSession = true)]
-        public List<Employee> EmployeeGraph()
+        public List<Employee> EmployeeGraph(bool truefalse)
         {
+            //accepts bool
+            //if it accepts true, then it will get a list of employees for just a manager
+            //if it accepts false, then it will get ALL employees
+            bool success = truefalse;
             List<Employee> employeeInfo = new List<Employee>();
             int date = 7;
             int employeeCount;
@@ -160,15 +166,31 @@ namespace Project2
             string lastName = "";
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-            string sqlSelect = 
-                "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, " +
-                "ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
-                    "FROM call_data_v2 cd, hours_worked hw, employee_data ed" +
-                        " where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
-                        " group by cd.EmployeeID; ";
 
-                           
-            
+            string sqlSelect = "";
+
+            if (success == true)
+            {
+                sqlSelect =
+                    "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, " +
+                    "ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
+                        "FROM call_data_v2 cd, hours_worked hw, employee_data ed" +
+                            " where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
+                            " group by cd.EmployeeID; ";
+            }
+            else if (success == false)
+            {
+                sqlSelect =
+                    "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, " +
+                    "ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
+                        "FROM call_data_v2 cd, hours_worked hw, employee_data ed" +
+                            " where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID " +
+                            " group by cd.EmployeeID; ";
+
+            }//end if/else
+
+
+
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
@@ -199,13 +221,25 @@ namespace Project2
                     lastName = temp.lname;
 
                     string sqlConnectString2 = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-
-                    string sqlSelect2 =
-                        "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", " +
-                        "hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
-                            "FROM call_data_v2 cd, hours_worked hw, employee_data ed " +
-                                " where Day(Call_Date) = " + i + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
-                                " and ed.FName = \"" + firstName + "\" and ed.LName = \"" + lastName + "\";";
+                    string sqlSelect2 = "";
+                    if (success == true)
+                    {
+                        sqlSelect2 =
+                            "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", " +
+                            "hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
+                                "FROM call_data_v2 cd, hours_worked hw, employee_data ed " +
+                                    " where Day(Call_Date) = " + i + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
+                                    " and ed.FName = \"" + firstName + "\" and ed.LName = \"" + lastName + "\";";
+                    }
+                    else if (success == false)
+                    {
+                        sqlSelect2 =
+                            "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", " +
+                            "hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
+                                "FROM call_data_v2 cd, hours_worked hw, employee_data ed " +
+                                    " where Day(Call_Date) = " + i + " and ed.employeeID = cd.employeeID " +
+                                    " and ed.FName = \"" + firstName + "\" and ed.LName = \"" + lastName + "\";";
+                    }
 
                     MySqlConnection sqlConnetion2 = new MySqlConnection(sqlConnectString2);
                     MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnetion2);
@@ -214,8 +248,16 @@ namespace Project2
                     DataTable sqlDt2 = new DataTable();
                     sqlDa2.Fill(sqlDt2);
 
-                    
-                    int prodLevel = Convert.ToInt32(sqlDt2.Rows[0]["Productivity Level"]);
+                    int prodLevel = 0;
+
+                    try
+                    {
+                        prodLevel = Convert.ToInt32(sqlDt2.Rows[0]["Productivity Level"]);
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
 
 
                     temp.productivityLevel[position] = prodLevel;
@@ -228,7 +270,7 @@ namespace Project2
                 
             }//end foreach
             return employeeInfo;
-        }//end webmethod
+        }//end EmployeeGraph webmethod
 
         //FINISHED
         [WebMethod(EnableSession = true)]
