@@ -150,21 +150,33 @@ namespace Project2
 
         //IN PROGRESS
         [WebMethod(EnableSession = true)]
-        public Employee[] EmployeeGraph()
+        public List<Employee> EmployeeGraph()
         {
-            Employee[] employeeInfo = new Employee[5];
+            List<Employee> employeeInfo = new List<Employee>();
             int date = 7;
             int position = 0;
             int employeeCount;
             int mgrid = Convert.ToInt32(Session["userID"]);
+            string firstName = "";
+            string lastName = "";
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
             string sqlSelect = 
                 "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, " +
                 "ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
                     "FROM call_data_v2 cd, hours_worked hw, employee_data ed" +
-                        "where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
-                        "group by EmployeeID, \"Time Worked\"; ";
+                        " where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
+                        " group by cd.EmployeeID; ";
+
+            string sqlConnectString2 = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+
+            string sqlSelect2 =
+                "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", " +
+                "hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
+                    "FROM call_data_v2 cd, hours_worked hw, employee_data ed " +
+                        " where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
+                        " and ed.FName = \"" + firstName + "\" and ed.LName = \"" + lastName + "\";";
+                           
             
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -180,10 +192,34 @@ namespace Project2
             foreach (DataRow row in sqlDt.Rows)
             {
                 Employee temp = new Employee();
+                temp.fname = sqlDt.Rows[0]["FirstName"].ToString();
+                temp.lname = sqlDt.Rows[0]["LastName"].ToString();
+
+                //declare employee properties
+                //start for loop, date starting at 7;
+                for (int i = 7; i <= 11; i++)
+                {
+                    MySqlConnection sqlConnetion2 = new MySqlConnection(sqlConnectString2);
+                    MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnetion2);
+
+                    MySqlDataAdapter sqlDa2 = new MySqlDataAdapter(sqlCommand2);
+                    DataTable sqlDt2 = new DataTable();
+                    sqlDa2.Fill(sqlDt);
+
+                    firstName = temp.fname;
+                    lastName = temp.lname;
+
+                    temp.productivityLevel[position] = Convert.ToInt32(sqlDt2.Rows[0]["Productivity Level"]);
+
+                    position++;
+                }//end for loop
+
                 
-            }
+                employeeInfo.Add(temp);
+                
+            }//end foreach
             return employeeInfo;
-        }
+        }//end webmethod
 
         //FINISHED
         [WebMethod(EnableSession = true)]
