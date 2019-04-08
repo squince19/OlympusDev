@@ -154,7 +154,6 @@ namespace Project2
         {
             List<Employee> employeeInfo = new List<Employee>();
             int date = 7;
-            int position = 0;
             int employeeCount;
             int mgrid = Convert.ToInt32(Session["userID"]);
             string firstName = "";
@@ -168,14 +167,6 @@ namespace Project2
                         " where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
                         " group by cd.EmployeeID; ";
 
-            string sqlConnectString2 = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-
-            string sqlSelect2 =
-                "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", " +
-                "hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
-                    "FROM call_data_v2 cd, hours_worked hw, employee_data ed " +
-                        " where Day(Call_Date) = " + date + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
-                        " and ed.FName = \"" + firstName + "\" and ed.LName = \"" + lastName + "\";";
                            
             
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
@@ -189,33 +180,51 @@ namespace Project2
 
             //NEED TO COMPLETE FOR LOOP 
             //THIS IS WHERE I LEFT OFF
+
+            int rowposition = 0;
             foreach (DataRow row in sqlDt.Rows)
             {
+                int position = 0;
                 Employee temp = new Employee();
-                temp.fname = sqlDt.Rows[0]["FirstName"].ToString();
-                temp.lname = sqlDt.Rows[0]["LastName"].ToString();
+                temp.fname = sqlDt.Rows[rowposition]["FirstName"].ToString();
+                temp.lname = sqlDt.Rows[rowposition]["LastName"].ToString();
+                temp.employeeId = Convert.ToInt32(sqlDt.Rows[rowposition]["employeeID"]);
+                temp.productivityLevel = new int[5];
 
                 //declare employee properties
                 //start for loop, date starting at 7;
                 for (int i = 7; i <= 11; i++)
                 {
+                    firstName = temp.fname;
+                    lastName = temp.lname;
+
+                    string sqlConnectString2 = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+
+                    string sqlSelect2 =
+                        "select cd.EmployeeID, cd.FirstName, cd.LastName, ed.ManagerID, ROUND((SUM(cd.CallLengthHrs)/400)) as \"Time Worked\", " +
+                        "hw.HoursWorked, ROUND((SUM(cd.CallLengthHrs)/400)/(hw.HoursWorked)*100) as \"Productivity Level\" " +
+                            "FROM call_data_v2 cd, hours_worked hw, employee_data ed " +
+                                " where Day(Call_Date) = " + i + " and ed.employeeID = cd.employeeID and ManagerID = " + mgrid +
+                                " and ed.FName = \"" + firstName + "\" and ed.LName = \"" + lastName + "\";";
+
                     MySqlConnection sqlConnetion2 = new MySqlConnection(sqlConnectString2);
                     MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnetion2);
 
                     MySqlDataAdapter sqlDa2 = new MySqlDataAdapter(sqlCommand2);
                     DataTable sqlDt2 = new DataTable();
-                    sqlDa2.Fill(sqlDt);
+                    sqlDa2.Fill(sqlDt2);
 
-                    firstName = temp.fname;
-                    lastName = temp.lname;
+                    
+                    int prodLevel = Convert.ToInt32(sqlDt2.Rows[0]["Productivity Level"]);
 
-                    temp.productivityLevel[position] = Convert.ToInt32(sqlDt2.Rows[0]["Productivity Level"]);
 
+                    temp.productivityLevel[position] = prodLevel;
                     position++;
                 }//end for loop
 
                 
                 employeeInfo.Add(temp);
+                rowposition++;
                 
             }//end foreach
             return employeeInfo;
