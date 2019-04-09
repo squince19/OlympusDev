@@ -111,7 +111,7 @@
         }
     </style>
 </head>
-<body onload="LoadEmployees()">
+<body onload="LoadPage()">
 
 
     <!-- Div for Navigation bar at top of page -->
@@ -123,7 +123,7 @@
         <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
         <button class="icon"><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
         <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px;height:34px; opacity: .6; background-color: wheat; "type="text" name="name" value="Search..." />
-        <button class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
+        <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
     </div>
 
 
@@ -139,7 +139,17 @@
 
         <div class="column" id="productivityData">
             <h3>Productivity Dashboard</h3>
-            <p style="height:500px; background-color:white;"><img src="images\test.png" alt="test image" /></p>
+            <table id="productivityTable">
+                <tr>
+                    <td>Employee</td>
+                    <td>Monday</td>
+                    <td>Tuesday</td>
+                    <td>Wednesday</td>
+                    <td>Thursday</td>
+                    <td>Friday</td>
+                </tr>
+            </table>
+            <!--<p style="height:500px; background-color:white;"><img src="images\test.png" alt="test image" /></p>-->
         </div>
 
         <div class="column" id="managerNotes">
@@ -168,5 +178,10 @@
 <script>
     function ChangeToHomePage() {
         window.location.href = "\LogOn.html"
+    }
+
+    function LoadPage() {
+        LoadEmployees();
+        Window.setTimeOut(LoadChart(), 5000);
     }
 </script>

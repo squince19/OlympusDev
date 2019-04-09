@@ -6,6 +6,7 @@ function LogOn(username, userPassword) {
  
     var webMethod = "WebService.asmx/LogOn";
     var parameters = "{\"username\":\"" + encodeURI(username) + "\",\"userPassword\":\"" + encodeURI(userPassword) + "\"}";
+    var LogOn = sessionStorage.getItem('LogOn');
 
     $.ajax({
         type: "POST",
@@ -21,7 +22,7 @@ function LogOn(username, userPassword) {
                 log = sessionStorage.getItem('logOn');
 
 
-                
+                sessionStorage.setItem('LogOn') = true;
             }
             else {
                 alert("Login Failed. Wrong username or password")
@@ -102,6 +103,61 @@ function LoadEmployees(log) {
         }
     });
     
+}
+
+//fucntion for EmployeeGraph
+var tableArr;
+var Log = false;
+function LoadChart(Log) {
+    var webMethod = "WebService.asmx/EmployeeGraph";
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        //gets a response, it calls the function mapped to the success key here
+        success: function (msg) {
+            alert("success");
+            Log = LogOn;
+            if (msg.d) {
+                tableArr = msg.d;
+                var table = document.createElement('table');
+                table.id = 'prodTable';
+                for (var i = 0; i < tableArr.length; i++) {
+                    var row = document.createElement('tr');
+                    row.setAttribute("id", tableArr[i].employeeID);
+                    for (var j = 0; j <= 5; j++) {
+                        var cell = document.createElement('td');
+                        if (j = 0) {
+                            cell.textContent = tableArr[i].lname + ", " + tableArr[i].fname;
+                            cell.setAttribute("id", "empName");
+                        }
+                        else if (j > 0) { 
+                            cell.setAttribute("id", "empData");
+                            if (tableArr[i].productivityLevel[j - 1] >= 80) {
+                                cell.bgColor = "Green";
+                            }
+                            else if (tableArr[i].productivityLevel[j - 1] < 80 && tableArr[i].productivityLevel[j - 1] >= 65) {
+                                cell.bgColor = "Yellow";
+                            }
+                            else if (tableArr[i].productivityLevel[j - 1] < 65) {
+                                cell.bgColor = "Red";
+                            }
+                        }
+                        row.appendChild(cell);
+                    }
+                    table.appendChild(row);
+                }
+                document.getElementById('productivityTable').appendChild('prodTable')
+            }
+            else {
+                alert("Error occurred loading graph")
+            }
+        },
+        error: function (e) {
+            alert("Error occurred communicating with server");
+        }
+    });
 }
 
 
