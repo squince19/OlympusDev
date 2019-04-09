@@ -95,6 +95,58 @@ function LoadEmployees() {
     
 }
 
+//fucntion for EmployeeGraph
+var tableArr;
+function LoadChart() {
+    var webMethod = "WebService.asmx/EmployeeGraph";
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        //gets a response, it calls the function mapped to the success key here
+        success: function (msg) {
+            alert("success");
+            if (msg.d) {
+                tableArr = msg.d;
+                var table = document.createElement('table');
+                table.id = 'prodTable';
+                for (var i = 0; i < tableArr.length; i++) {
+                    var row = document.createElement('tr');
+                    row.setAttribute("id", tableArr[i].id);
+                    for (var j = 1; j <= 5; j++) {
+                        var cell = document.createElement('td');
+                        cell.setAttribute("id", "rowCell");
+                        if (i = 0) {
+                            cell.textContent = tableArr[i].lname + ", " + tableArr[i].fname;
+                        }
+                        else if (i > 0) {
+                            if (j >= 80) {
+                                cell.bgColor = "Green";
+                            }
+                            else if (j < 80 && j >= 65) {
+                                cell.bgColor = "Yellow";
+                            }
+                            else if (j < 65) {
+                                cell.bgColor = "Red";
+                            }
+                        }
+                        row.appendChild(cell);
+                    }
+                    table.appendChild(row);
+                }
+                document.getElementById('productivityTable').appendChild('prodtable')
+            }
+            else {
+                alert("Error occurred loading graph")
+            }
+        },
+        error: function (e) {
+            alert("Error occurred communicating with server");
+        }
+    });
+}
+
 
 
 

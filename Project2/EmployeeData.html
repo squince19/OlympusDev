@@ -111,7 +111,7 @@
         }
     </style>
 </head>
-<body onload="LoadEmployees()">
+<body onload="LoadPage()">
 
 
     <!-- Div for Navigation bar at top of page -->
@@ -135,6 +135,16 @@
             <div id="employeeScrollBar" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
                 <p id="allBtn" style="margin-left:0px;">All</p>
             </div>
+            <table id="productivityTable">
+                <tr>
+                    <td>Employee</td>
+                    <td>Monday</td>
+                    <td>Tuesday</td>
+                    <td>Wednesday</td>
+                    <td>Thursday</td>
+                    <td>Friday</td>
+                </tr>
+            </table>
         </div>
 
         <div class="column" id="productivityData">
@@ -169,5 +179,10 @@
 <script>
     function ChangeToHomePage() {
         window.location.href = "\LogOn.html"
+    }
+
+    function LoadPage() {
+        LoadEmployees();
+        LoadChart();
     }
 </script>
