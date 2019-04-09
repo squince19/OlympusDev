@@ -2,6 +2,7 @@
  
     var webMethod = "WebService.asmx/LogOn";
     var parameters = "{\"username\":\"" + encodeURI(username) + "\",\"userPassword\":\"" + encodeURI(userPassword) + "\"}";
+    var LogOn = sessionStorage.getItem('LogOn');
 
     $.ajax({
         type: "POST",
@@ -14,7 +15,7 @@
             if (msg.d) {
                 window.location.href = 'EmployeeData.html';
 
-                
+                sessionStorage.setItem('LogOn') = true;
             }
             else {
                 alert("Login Failed. Wrong username or password")
@@ -97,7 +98,8 @@ function LoadEmployees() {
 
 //fucntion for EmployeeGraph
 var tableArr;
-function LoadChart() {
+var Log = false;
+function LoadChart(Log) {
     var webMethod = "WebService.asmx/EmployeeGraph";
     $.ajax({
         type: "POST",
@@ -107,6 +109,7 @@ function LoadChart() {
         //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
             alert("success");
+            Log = LogOn;
             if (msg.d) {
                 tableArr = msg.d;
                 var table = document.createElement('table');
