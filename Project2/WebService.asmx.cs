@@ -70,10 +70,27 @@ namespace Project2
         { 
             //WEB METHOD IN PROGRESS
             List<Employee> Employees = new List<Employee>();
-            string userID = Session["userID"].ToString();
+
+            string sqlSelect = "";
+            string sqlSelect2 = "";
+            string userID = "";
+
+            int mgrID = 0;
+
+
+            if (Session["userID"] == null)
+            {
+                sqlSelect = "SELECT DISTINCT FName, LName, employeeID, ManagerID from employee_data;";
+            }
+            else if (Session["userID"] != null)
+            {
+                userID = Session["userID"].ToString();
+                sqlSelect = "SELECT DISTINCT FName, LName, employeeID, ManagerID from employee_data WHERE ManagerID = " + userID;
+                sqlSelect2 = "SELECT FName, LName from employee_data WHERE employeeID = " + mgrID;
+
+            }
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-            string sqlSelect = "SELECT DISTINCT FName, LName, employeeID, ManagerID from employee_data WHERE ManagerID = " + userID;
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
@@ -82,7 +99,6 @@ namespace Project2
             sqlDa.Fill(sqlDt);
 
             int count = sqlDt.Rows.Count;
-            int mgrID = 0;
 
 
             foreach(DataRow row in sqlDt.Rows)
@@ -90,11 +106,23 @@ namespace Project2
                 Employee tempEmployee = new Employee();
                 tempEmployee.fname = row["FName"].ToString();
                 tempEmployee.lname = row["LName"].ToString();
-                tempEmployee.employeeId = Convert.ToInt32(row["employeeID"]);
                 tempEmployee.ManagerID = Convert.ToInt32(row["ManagerID"]);
                 mgrID = tempEmployee.ManagerID;
+
+
+                if (Session["userID"] == null)
+                {
+
+                    sqlSelect2 = "SELECT FName, LName from employee_data where employeeID = " + tempEmployee.ManagerID;
+
+                }
+                else if (Session["userID"] != null)
+                {
+                    sqlSelect2 = "SELECT FName, LName from employee_data WHERE employeeID = " + mgrID;
+
+                }
+                tempEmployee.employeeId = Convert.ToInt32(row["employeeID"]);
                 string sqlConnectString2 = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-                string sqlSelect2 = "SELECT FName, LName from employee_data WHERE employeeID = " + mgrID;
                 MySqlConnection sqlConnection2 = new MySqlConnection(sqlConnectString2);
                 MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnection2);
 
@@ -102,9 +130,16 @@ namespace Project2
                 DataTable sqlDt2 = new DataTable();
                 sqlDa2.Fill(sqlDt2);
 
-                string managerFirstName = sqlDt2.Rows[0]["FName"].ToString();
-                string managerLastName = sqlDt2.Rows[0]["LName"].ToString();
-                tempEmployee.ManagerName = managerFirstName + " " + managerLastName;
+                try
+                {
+                    string managerFirstName = sqlDt2.Rows[0]["FName"].ToString();
+                    string managerLastName = sqlDt2.Rows[0]["LName"].ToString();
+                    tempEmployee.ManagerName = managerFirstName + " " + managerLastName;
+                }
+                catch (Exception e)
+                {
+
+                }
 
                 Employees.Add(tempEmployee);
             }
@@ -200,9 +235,6 @@ namespace Project2
 
             employeeCount = sqlDt.Rows.Count;
 
-            //NEED TO COMPLETE FOR LOOP 
-            //THIS IS WHERE I LEFT OFF
-
             int rowposition = 0;
             foreach (DataRow row in sqlDt.Rows)
             {
@@ -281,7 +313,6 @@ namespace Project2
             string sqlSelect = "SELECT DISTINCT FName, LName from employee_data where FName LIKE '%" + name + "%' or LName LIKE '%" + name + "%'";
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-            //sqlCommand.Parameters.AddWithValue("@name", HttpUtility.UrlDecode(name));
 
 
             MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
@@ -298,8 +329,52 @@ namespace Project2
 
             return searchResults;
 
+        }//end SearchEmployee web method
+
+        [WebMethod(EnableSession = true)]
+        public List<Note> LoadNotes(string employeeID)
+        {
+            List<Note> noteList = new List<Note>();
+            Convert.ToInt32(employeeID);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            //plug in sql statement later
+            string sqlSelect =
+                "select  mn.noteid, mn.EmployeeID, mn.ManagerID, dt.Fname, dt.Lname, mn.note_subject, mn.note_body" +
+                    "from employee_data ed LEFT JOIN manager_notes mn ON ed.employeeID = mn.employeeID" +
+                    "LEFT JOIN employee_data dt ON mn.ManagerID = dt.employeeID;";
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+            sqlDa.Fill(sqlDt);
+
+            foreach (DataRow row in sqlDt.Rows)
+            {
+                if(Convert.ToInt32(row["employeeID"]) == Convert.ToInt32(employeeID))
+                {
+                    Note tempNote = new Note();
+
+                    tempNote.ManagerID = row["ManagerID"].ToString();
+
+                    tempNote.Date = row["note_date"].ToString();
+                    tempNote.Subject = row["note_subject"].ToString();
+                    tempNote.Body = row["note_body"].ToString();
+                    string firstName = row["FName"].ToString();
+                    string lastName = row["LName"].ToString();
+                    tempNote.ManagerName = firstName + " " + lastName;
+                    tempNote.ManagerID = row["ManagerID"].ToString();
+                    tempNote.NoteID = row["noteID"].ToString();
+                    noteList.Add(tempNote);
+                }
+                
+            }
+
+                return noteList;
         }
 
-        
-    }
-}
+
+    }//end class
+}//end namespace
