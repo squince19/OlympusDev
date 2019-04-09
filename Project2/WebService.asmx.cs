@@ -147,7 +147,7 @@ namespace Project2
 
         }
 
-        //FINISHED
+        //FINISHED 
         //GETS INFORMATION FOR EVERY EMPLOYEE FOR PUTTING IN THE NOTES BOX
         [WebMethod(EnableSession = true)]
         public Employee GetEmployeeInformation(string employeeID)
@@ -377,4 +377,4 @@ namespace Project2
 
 
     }//end class
-}//end namespace
+}//end namespace*
