@@ -135,6 +135,10 @@
             <div id="employeeScrollBar" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
                 <p id="allBtn" style="margin-left:0px;">All</p>
             </div>
+        </div>
+
+        <div class="column" id="productivityData">
+            <h3>Productivity Dashboard</h3>
             <table id="productivityTable">
                 <tr>
                     <td>Employee</td>
@@ -145,11 +149,7 @@
                     <td>Friday</td>
                 </tr>
             </table>
-        </div>
-
-        <div class="column" id="productivityData">
-            <h3>Productivity Dashboard</h3>
-            <p style="height:500px; background-color:white;"><img src="images\test.png" alt="test image" /></p>
+            <!--<p style="height:500px; background-color:white;"><img src="images\test.png" alt="test image" /></p>-->
         </div>
 
         <div class="column" id="managerNotes">
@@ -183,6 +183,6 @@
 
     function LoadPage() {
         LoadEmployees();
-        LoadChart();
+        Window.setTimeOut(LoadChart(), 5000);
     }
 </script>

@@ -113,21 +113,22 @@ function LoadChart() {
                 table.id = 'prodTable';
                 for (var i = 0; i < tableArr.length; i++) {
                     var row = document.createElement('tr');
-                    row.setAttribute("id", tableArr[i].id);
-                    for (var j = 1; j <= 5; j++) {
+                    row.setAttribute("id", tableArr[i].employeeID);
+                    for (var j = 0; j <= 5; j++) {
                         var cell = document.createElement('td');
-                        cell.setAttribute("id", "rowCell");
-                        if (i = 0) {
+                        if (j = 0) {
                             cell.textContent = tableArr[i].lname + ", " + tableArr[i].fname;
+                            cell.setAttribute("id", "empName");
                         }
-                        else if (i > 0) {
-                            if (j >= 80) {
+                        else if (j > 0) { 
+                            cell.setAttribute("id", "empData");
+                            if (tableArr[i].productivityLevel[j - 1] >= 80) {
                                 cell.bgColor = "Green";
                             }
-                            else if (j < 80 && j >= 65) {
+                            else if (tableArr[i].productivityLevel[j - 1] < 80 && tableArr[i].productivityLevel[j - 1] >= 65) {
                                 cell.bgColor = "Yellow";
                             }
-                            else if (j < 65) {
+                            else if (tableArr[i].productivityLevel[j - 1] < 65) {
                                 cell.bgColor = "Red";
                             }
                         }
@@ -135,7 +136,7 @@ function LoadChart() {
                     }
                     table.appendChild(row);
                 }
-                document.getElementById('productivityTable').appendChild('prodtable')
+                document.getElementById('productivityTable').appendChild('prodTable')
             }
             else {
                 alert("Error occurred loading graph")
