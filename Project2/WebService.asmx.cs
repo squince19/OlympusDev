@@ -152,12 +152,12 @@ namespace Project2
         //NEED TO REVIEW DATABASE TO CHECK FOR INVALID DATA
         //INVALID DATA FOR JOSEPH LOCK
         [WebMethod(EnableSession = true)]
-        public List<Employee> EmployeeGraph(bool truefalse)
+        public List<Employee> EmployeeGraph()
         {
             //accepts bool
             //if it accepts true, then it will get a list of employees for just a manager
             //if it accepts false, then it will get ALL employees
-            bool success = truefalse;
+            bool success = false;
             List<Employee> employeeInfo = new List<Employee>();
             int date = 7;
             int employeeCount;
