@@ -15,6 +15,7 @@ namespace Project2
         public string SLAColor;
         public string ManagerName;
         public int ManagerID;
+        public string Department;
 
         public override string ToString()
         {

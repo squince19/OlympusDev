@@ -1,4 +1,8 @@
-﻿function LogOn(username, userPassword) {
+﻿sessionStorage.setItem('logOn', 'false');
+var log = sessionStorage.getItem('logOn');
+log = false;
+
+function LogOn(username, userPassword) {
  
     var webMethod = "WebService.asmx/LogOn";
     var parameters = "{\"username\":\"" + encodeURI(username) + "\",\"userPassword\":\"" + encodeURI(userPassword) + "\"}";
@@ -14,6 +18,9 @@
         success: function (msg) {
             if (msg.d) {
                 window.location.href = 'EmployeeData.html';
+                sessionStorage.setItem('logOn', 'true');
+                log = sessionStorage.getItem('logOn');
+
 
                 sessionStorage.setItem('LogOn') = true;
             }
@@ -51,19 +58,21 @@ function GetInfo(employeeID) {
         }
     });
 }
-function hello() {
-    console.log("hey there");
-}
+
+//Test function
+//function hello() {
+//    console.log("hey there");
+//}
 
 var employeeArray;
 
 
-//function in progress SQ
-function LoadEmployees() {
+function LoadEmployees(log) {
     var webMethod = "WebService.asmx/GetNames";
     $.ajax({
         type: "POST",
         url: webMethod,
+        data: log,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         //gets a response, it calls the function mapped to the success key here
