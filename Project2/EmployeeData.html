@@ -24,6 +24,7 @@
             margin-right: 5px;
             padding: 40px;
             padding-top: 20px;
+            width: 93%;
         }
 
         .column {
@@ -84,14 +85,15 @@
             margin: 0px;
             margin-bottom: 5px;
             margin-left: 15px;
+            text-align: center;
         }
-        #employeeData p {
+        #employeeData p, #addNoteBtn p {
             background-color: white;
             font-size: small;
             margin: 0px;
             margin-bottom: 5px;
         }
-        #employeeData p:hover {
+        #employeeData p:hover, p:hover#addNoteBtn {
             background-color: Highlight;
             margin: 5px;
             cursor: pointer;
@@ -160,8 +162,7 @@
         <div class="column" id="employeeData">
             <h3>Employees</h3>
             <div id="employeeScrollBar" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
-                <p id="allBtn" style="margin-left:0px;">All</p>
-               
+                <p id="allBtn" style="margin-left:0px;">All</p>          
             </div>
         </div>
         <div id="addNotes" class="modal">
@@ -227,9 +228,7 @@
                 <p>
                 </p>
                
-                <button type="button" class="btn" onclick="document.getElementById('addNotes').style.display='block'">Create Note</button>
-                <button style="position:inherit; margin-left: 75px; margin-top: 75px;">Edit Notes</button>
-                <button style="position:inherit; margin-left: 1px; margin-top: 15px; overflow-y:auto;">Save</button>
+                <p id="addNoteBtn" onclick="document.getElementById('addNotes').style.display='block'">Create Note</p>
                 <br />
             </div>
         </div>
