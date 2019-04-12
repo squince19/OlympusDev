@@ -117,62 +117,21 @@ function LoadChart() {
         dataType: "json",
         //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
-            if (msg.d) {
-
-
-                     arrayInt = msg.d;
-               // for (i = 0; i < arrayInt.length; i++) {
-
-                    console.log(arrayInt[0].employeeId);
-                    console.log(arrayInt[0].fname);
-                    console.log(arrayInt[0].lname);
-                    console.log(arrayInt[0].productivityLevel[0])
-                    console.log(arrayInt[0].productivityLevel[1])
-                    console.log(arrayInt[0].productivityLevel[2])
-                    console.log(arrayInt[0].productivityLevel[3])
-                    console.log(arrayInt[0].productivityLevel[4])
-
-                    console.log(arrayInt[1].employeeId);
-                    console.log(arrayInt[1].fname);
-                    console.log(arrayInt[1].lname);
-                    console.log(arrayInt[1].productivityLevel[0])
-                    console.log(arrayInt[1].productivityLevel[1])
-                    console.log(arrayInt[1].productivityLevel[2])
-                    console.log(arrayInt[1].productivityLevel[3])
-                    console.log(arrayInt[1].productivityLevel[4])
-
-
-
-                /*
-                    var scrollBar = document.getElementById('employeeScrollBar');
-                    var pNode = document.createElement('p');
-                    var value = employeeArray[i].employeeId;
-                    console.log(value);
-                    pNode.setAttribute("id", value);
-                    pNode.setAttribute("onclick", "GetInfo(" + value + ")");
-                    pValue = employeeArray[i].fname + " " + employeeArray[i].lname;
-                    pNode.innerHTML = pValue;
-                    scrollBar.appendChild(pNode);*/
-
-                //}
-
-
-
-                /*tableArr = msg.d;
-                alert(msg.d);
+            if (msg.d.length > 0) {
+                tableArr = msg.d;
                 var table = document.createElement('table');
                 table.id = 'prodTable';
                 alert("Table created")
-                //for (var i = 0; i < tableArr.length; i++) {
+                for (var i = 0; i < tableArr.length; i++) {
                     var row = document.createElement('tr');
                     row.setAttribute("id", tableArr[0].employeeID);
-                   for (var j = 0; j <= 5; j++) {
+                    for (var j = 0; j <= 5; j++) {
                         var cell = document.createElement('td');
-                        if (j = 0) {
+                        if (j == 0) {
                             cell.textContent = tableArr[i].lname + ", " + tableArr[i].fname;
                             cell.setAttribute("id", "empName");
                         }
-                        else if (j > 0) { 
+                        else if (j > 0) {
                             cell.setAttribute("id", "empData");
                             if (tableArr[i].productivityLevel[j - 1] >= 80) {
                                 cell.bgColor = "Green";
@@ -187,11 +146,11 @@ function LoadChart() {
                         row.appendChild(cell);
                     }
                     table.appendChild(row);
-                }*/
-                //document.getElementById('productivityTable').appendChild('prodTable')
+                }
+                document.getElementById('productivityTable').appendChild(table);
             }
             else {
-                alert("Error occurred loading graph")
+                alert("Error occurred loading graph");
             }
         },
         error: function (e) {
@@ -199,6 +158,7 @@ function LoadChart() {
         }
     });
 }
+
 
 
 
