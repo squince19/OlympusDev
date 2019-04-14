@@ -11,7 +11,7 @@
     <style>
 
         * {
-            background-color: #FFDF9E;
+            background-color: papayawhip;
             font-family: Calibri;
             margin-top: 0;
             margin-left: 0;
@@ -161,19 +161,19 @@
 <body onload="LoadPage()">
 
     <!-- Div for Navigation bar at top of page -->
-    <div id="header" style="background-color:#FF971A;">
-        <p style="margin-left: 15px; text-align: center; font-size: xx-large; color: darkslategray; display:inline-block; margin-right:25%"><b>Olympus</b>PS</p>
-        <h2 style="text-align:center; margin-left:3%; display: inline-block;">
+    <div id="header" style="background-color:#FF971A; height: 60px;">
+        <p style="margin-left: 15px; text-align: center; font-size: xx-large; color: darkslategray; display:inline-block; margin-right:25%; margin-top:10px;"><b>Olympus</b>PS</p>
+        <h2 style="text-align:center; margin-left:3%; display: inline-block; font-style: italic">
             Manager Dashboard
         </h2>
-        <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
-        <button class="icon"><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
-        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px;height:34px; opacity: .6; background-color: wheat; "type="text" name="name" value="Search..." />
-        <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
+        <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px; margin-top: 10px;" class="fa fa-home"></i></button>
+        <button class="icon"><i style=" font-size: 24px; margin-top:10px; margin-left: 5px;" class="fa fa-navicon"></i></button>
+        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px; margin-top:15px; height:34px; opacity: .6; background-color: wheat; border-width: 0px; border-radius: 5px;"type="text" name="name" value="Search..." />
+        <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px; margin-top: 10px;" class="fa fa-search"></i></button>
     </div>
 
 
-    <h2 style="margin-left:100px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black">Welcome, [Insert Manager Name Here]</h2>
+     <h2 style="height: 30px; max-width: 40%; margin-left:50px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black; background-image: linear-gradient(90deg,orange 1%, white 0); white-space:pre;">   Welcome, [Insert Manager Name Here]</h2>
     <!-- Div for formatting page content -->
     <div class="columnContainer">
         <div class="column" id="employeeData">
