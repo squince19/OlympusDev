@@ -14,39 +14,54 @@
         }
 
         #loginForm {
-            background-color: white;
+            background-color: papayawhip;
             border-style: solid;
-            border-width: 5px;
+            border-radius: 50px;
+            border-width: 1px;
             border-color: wheat;
-            height: auto;
+            height: 350px;
             width: 300px;
             margin: 0 auto;
             margin-top: 0px;
         }
 
         form {
-            background-color: white;
-            margin: 10px auto;
+            background-color: papayawhip;
+            border-radius: 50px;
+            margin: 0 auto;
+            margin-top: 10px;
             margin-left: 3%;
         }
 
         input {
-            width: 90%;
-            background-color: white;
-            margin: 5px;
+            height: 37px;
+            width: 70%;
+            background-color: navajowhite;
+            border-radius: 5px;
+            border-width: 0px;
+            margin: 10px;
+            margin-left: 20px;
+        }
+        
+        input::placeholder {
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <p style="text-align: center; margin-top: 12%; font-size: xx-large; color: darkslategray;"><b>Olympus</b>PS</p>
+    <p style="text-align: center; margin-top: 10%; font-size: xx-large; color: darkslategray;"><b>Olympus</b>PS</p>
     <div id="loginForm">
         <form>
-            <h6 style="text-align: center; margin: 15px auto; background-color: white;">Sign in to start your session</h6>
-            <i style="background-color: white; " class="fa fa-user"></i>
+            <br>
+            <br>
+            <h5 style="text-align: center; border-radius: 50px; margin: auto; background-color: papayawhip; color: dimgrey; font-size: 15px;">Sign In To Start Your Session</h5>
+            <br>
+            <br>
+            <i style="background-color: papayawhip; margin-left:5%; " class="fa fa-user"></i>
             <input id="logonID" type="text" name="username" placeholder="Username"><br>
-            <i style="background-color: white; " class="fa fa-lock"></i>
-            <input id="logonPassword" type="password" name="password" placeholder="Password" /> <br>
-            <button style="background-color: #FFEED2; margin: 10px auto; display: block;" type="button" onclick="LogOn($('#logonID').val(), $('#logonPassword').val()); return false;">Log in</button>
+            <i style="background-color: papayawhip; margin-left:5%; " class="fa fa-lock"></i>
+            <input id="logonPassword" type="password" name="password" placeholder="Password" />
+            <button style="background-color: #ffb347; border-width: 0px; border-radius: 10px; height: 45px; width: 90px; margin: 10px auto; margin-top:20%;font-size:14px;box-shadow: 3px 3px grey; display: block;" type="button" onclick="LogOn($('#logonID').val(), $('#logonPassword').val()); return false;">Log in</button>
         </form>
     </div>
 

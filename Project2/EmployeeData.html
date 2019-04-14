@@ -5,13 +5,12 @@
     <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
     <script src="JavaScript.js"></script>
 
     <style>
 
         * {
-            background-color: #FFDF9E;
+            background-color: papayawhip;
             font-family: Calibri;
             margin-top: 0;
             margin-left: 0;
@@ -20,10 +19,11 @@
 
         .columnContainer {
             display: table;
-            margin-left: 5px;
-            margin-right: 5px;
+            margin-left: 10px;
+            margin-right: 10px;
             padding: 40px;
-            padding-top: 20px;
+            padding-top: 15px;
+            width: 93%;
         }
 
         .column {
@@ -41,7 +41,7 @@
         }
 
 
-         #managerNotes ::-webkit-scrollbar {
+        #managerNotes ::-webkit-scrollbar {
             width: 10px;
         }
 
@@ -84,32 +84,43 @@
             margin: 0px;
             margin-bottom: 5px;
             margin-left: 15px;
+            text-align: center;
         }
-        #employeeData p {
+        #employeeData p, #addNoteBtn p {
             background-color: white;
             font-size: small;
             margin: 0px;
             margin-bottom: 5px;
         }
-        #employeeData p:hover {
-            background-color: Highlight;
+        #employeeData p:hover, p:hover#addNoteBtn {
+            background-color: #ffc966;
+            border-radius: 3px;
             margin: 5px;
             cursor: pointer;
         }
         #header button{
             display:inline-block;
             float:right;
-            margin-right: 10px;
+            margin-right: 15px;
             margin-top: 10px;
         }
         #header * {
             margin-bottom: 1px;
             background-color: #FF971A;
         }
-        button{
-            background-color: gray;
+        .clearfix button{
+            width: 80px;
+            height: 40px;
+            font-size: 15px;
+            margin-bottom: 10px;
+            border-width: 0;
+            border-radius: 3px;
+            margin-left: 10px;
+            background-color: #ffb347;
         }
-
+        .clearfix button:hover{
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
@@ -120,21 +131,49 @@
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
             background-color: rgba(0,0,0,0.5);
+            border-width: 0px;
             padding-top: 50px;
         }
 
         .createNoteForm {
+            
             margin-left: auto;
             margin-right: auto;
-            max-width: 300px;
+            max-width: 600px;
+            max-height: 800px;
             padding: 16px;
-            background-color: white;
+            border-radius: 5px;
+            background-color: #fff5e6;
         }
 
         #noteBodyinput {
-            height: 140px;
+            height: 160px;
             width: 140px;
+            margin-top: 15px;
+            border-width: 0px;
+            border-radius: 3px;
+            background-color: white;
+        }
+
+        #productivityTable {
+            table-layout: fixed;
+            width: 100%;
+            background-color: white;
+        }
+        #productivityTable th {
+            background-color: white;
+        }
+
+        #productivityTable *{
+            width: .1667%;
+            text-align: center;
             
+        }
+        
+        .clearfix{
+            background-color: #fff5e6;
+            margin-top: 50px;
+            margin-left: 60%;
         }
 
     </style>
@@ -142,26 +181,25 @@
 <body onload="LoadPage()">
 
     <!-- Div for Navigation bar at top of page -->
-    <div id="header" style="background-color:#FF971A;">
-        <p style="margin-left: 15px; text-align: center; font-size: xx-large; color: darkslategray; display:inline-block; margin-right:25%"><b>Olympus</b>PS</p>
-        <h2 style="text-align:center; margin-left:3%; display: inline-block;">
+    <div id="header" style="background-color:#FF971A; height: 60px;">
+        <p style="margin-left: 15px; text-align: center; font-size: xx-large; color: darkslategray; display:inline-block; margin-right:25%; margin-top:10px;"><b>Olympus</b>PS</p>
+        <h2 style="text-align:center; margin-left:3%; display: inline-block; font-style: italic">
             Manager Dashboard
         </h2>
-        <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px;" class="fa fa-home"></i></button>
-        <button class="icon"><i style=" font-size: 24px;" class="fa fa-navicon"></i></button>
-        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px;height:34px; opacity: .6; background-color: wheat; "type="text" name="name" value="Search..." />
-        <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px;" class="fa fa-search"></i></button>
+        <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px; margin-top: 10px;" class="fa fa-home"></i></button>
+        <button class="icon"><i style=" font-size: 24px; margin-top:10px; margin-left: 5px;" class="fa fa-navicon"></i></button>
+        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px; margin-top:15px; height:34px; opacity: .6; background-color: wheat; border-width: 0px; border-radius: 5px;"type="text" name="name" placeholder="Search..." />
+        <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px; margin-top: 10px;" class="fa fa-search"></i></button>
     </div>
 
 
-    <h2 style="margin-left:100px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black">Welcome, [Insert Manager Name Here]</h2>
+     <h2 style="height: 45px; width: 30%; margin-left:50px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black; background-image: linear-gradient(360deg,orange 8%, white 0); white-space:pre; font-size: 20px; line-height: 40px;">   Welcome, [Insert Manager Name Here]</h2>
     <!-- Div for formatting page content -->
     <div class="columnContainer">
         <div class="column" id="employeeData">
             <h3>Employees</h3>
             <div id="employeeScrollBar" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
-                <p id="allBtn" style="margin-left:0px;">All</p>
-               
+                <p id="allBtn" style="margin-left:0px;">All</p>          
             </div>
         </div>
         <div id="addNotes" class="modal">
@@ -169,8 +207,9 @@
 
             <!-- Create Account Modal Content -->
             <form action="" class="createNoteForm" style="overflow: auto;">
-                <div class="container">
-                    <h1>Create Note</h1>
+                <div class="container" style="background-color: #fff5e6;">
+                    <br>
+                    <h2 style="text-align:center; margin-left: auto; background-color: #fff5e6;">Create Note</h2>
 
                     <!--<div class="noteCreate" style="display: inline-block;">
                         <input type ="text" name="noteSubject" onchange="displayField()" value="student"><b>Student</b>
@@ -180,11 +219,11 @@
                     <br>
                     <br>
 
-                    <label for="noteSubject"><b>Note Subject</b></label>
-                    <input type="text" placeholder="Enter Note Subject" id="noteSubjectInput" name="noteSubject" required>
+                    <label style="width: 25%; margin-right: 15px;"for="noteSubject"><b style="margin-left: 10px; background: #fff5e6;">Note Subject</b></label>
+                    <input style="width: 75%; height: 35px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;"type="text" placeholder="Enter Note Subject" id="noteSubjectInput" name="noteSubject" required>
                     <br />
-                    <label for="noteBody"><b>Note Body</b></label>
-                    <input type="text" placeholder="Enter Note Body" id="noteBodyinput" name="noteBody" required>
+                    <label style="width: 25%; margin-right: 30px;"for="noteBody"><b style="margin-left: 10px; background: #fff5e6;">Note Body</b></label>
+                    <input style="width: 75%;"type="text" placeholder="Enter Note Body" id="noteBodyinput" name="noteBody" required>
 
                     <div class="clearfix">
                         <button type="submit" onclick="createNote('note', $('#noteSubjectInput').val(), $('#noteBodyinput').val(), document.getElementById('addNotes').style.display='none')
@@ -201,7 +240,7 @@
             <h3>Productivity Dashboard</h3>
             <table id="productivityTable">
                 <tr>
-                    <td>Employee</td>/
+                    <td>Employee</td>
                     <td>Monday</td>
                     <td>Tuesday</td>
                     <td>Wednesday</td>
@@ -216,19 +255,21 @@
             <h3>Manager Notes</h3>
             <div style="width:100%; height:500px;line-height:3em;overflow-y:auto;">
                 <Label id="empNameLbl">Name</Label>
-                <p id="employeeName">  </p>
+                <p id="employeeName"></p>
+                <br />
                 <Label id="departmentLbl">Department</Label>
-                <p id="deptName">  </p>
-                <Label id="notesLbl">Notes:</Label>
-                <div id="notesScrollBar" class="removeDiv" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
-                        <p>""</p>
-                </div>
-
-                    <button type="button" class="btn" onclick="document.getElementById('addNotes').style.display = 'block'">Create Note</button>
-                    <button style="position:inherit; margin-left: 75px; margin-top: 75px;">Edit Notes</button>
-                    <button style="position:inherit; margin-left: 1px; margin-top: 15px; overflow-y:auto;">Save</button>
-                </div>
+                <p id="deptName"></p>
+                <br />
+                <p id="prod"></p>
+                <br />
+                <p id="notes">Notes:</p>
+                <p>
+                </p>
+               
+                <p id="addNoteBtn" onclick="document.getElementById('addNotes').style.display='block'">Create Note</p>
+                <br />
             </div>
+        </div>
     </div>
 
 </body>
@@ -241,10 +282,5 @@
     function LoadPage() {
         LoadEmployees();
         LoadChart();
-    }
-
-    function removeChild() {
-        $(".noteClass").remove();
-
     }
 </script>
