@@ -35,6 +35,52 @@ function LogOn(username, userPassword) {
     });
 }
 
+var x = 0;
+
+function GetNotes(employeeID) {
+    var webMethod = "WebService.asmx/LoadNotes";
+    var parameters = "{\"employeeID\":\"" + encodeURI(employeeID) + "\"}";
+    var noteArray;
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8:",
+        dataType: "json",
+        success: function(msg) {
+            //$(".empClass").click(function () { removeChild(); });
+                if (msg.d) {
+                    noteArray = msg.d;
+                    for (i = 0; i < noteArray.length; i++) {
+
+                    console.log(noteArray[i].EmployeeID);
+                    var scrollBar = document.getElementById('notesScrollBar');
+                    var pNode = document.createElement('p');
+                    var value = noteArray[i].Subject;
+                    console.log(value);
+                        pNode.setAttribute("id", "note" + noteArray[i].NoteID);
+                        pNode.setAttribute("class", "noteClass");
+                    pNode.setAttribute("onclick", "DisplayNoteInfo(" + noteArray[i] + ")");
+
+                    pNode.innerHTML = value;
+                    scrollBar.appendChild(pNode);
+            }
+        }
+        else {
+            alert("FAIL :(");
+        }
+    
+        },
+        error: function (e) {
+            alert("boo...");
+        }
+    });
+
+}
+
+function DisplayNoteInfo(id) {
+}
+
 function GetInfo(employeeID) {
     var webMethod = "WebService.asmx/GetEmployeeInformation";
     var parameters = "{\"employeeID\":\"" + encodeURI(employeeID) + "\"}";
@@ -48,6 +94,9 @@ function GetInfo(employeeID) {
         success: function (msg) {
             if (msg.d) {
                 document.getElementById('employeeName').innerHTML = msg.d.fname + " " + msg.d.lname;
+                document.getElementById('deptName').innerHTML = msg.d.Department;
+                GetNotes(employeeID);
+
             }
             else {
                 alert("FAIL :(")
@@ -89,6 +138,7 @@ function LoadEmployees(log) {
                     console.log(value);
                     pNode.setAttribute("id", value);
                     pNode.setAttribute("onclick", "GetInfo(" + value + ")");
+                    pNode.setAttribute("class", "empClass");
                     pValue = employeeArray[i].fname + " " + employeeArray[i].lname;
                     pNode.innerHTML = pValue;
                     scrollBar.appendChild(pNode);

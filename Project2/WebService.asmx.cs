@@ -166,6 +166,7 @@ namespace Project2
             emp.lname = sqlDt.Rows[0]["LName"].ToString();
             emp.employeeId = Convert.ToInt32(sqlDt.Rows[0]["employeeID"]);
             emp.ManagerID = Convert.ToInt32(sqlDt.Rows[0]["ManagerID"]);
+            emp.Department = sqlDt.Rows[0]["dept"].ToString();
             int mgrID = emp.ManagerID;
             string sqlConnectString2 = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
             string sqlSelect2 = "SELECT FName, LName from employee_data WHERE employeeID = " + mgrID;
@@ -340,34 +341,43 @@ namespace Project2
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
             //plug in sql statement later
             string sqlSelect =
-                "select  mn.noteid, mn.EmployeeID, mn.ManagerID, dt.Fname, dt.Lname, mn.note_subject, mn.note_body" +
+                "select  mn.noteid, mn.EmployeeID, mn.ManagerID, dt.Fname, dt.Lname, mn.note_subject, mn.note_body " +
                     "from employee_data ed LEFT JOIN manager_notes mn ON ed.employeeID = mn.employeeID" +
-                    "LEFT JOIN employee_data dt ON mn.ManagerID = dt.employeeID;";
+                    " LEFT JOIN employee_data dt ON mn.ManagerID = dt.employeeID;";
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
 
             MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
             DataTable sqlDt = new DataTable();
+
             sqlDa.Fill(sqlDt);
+            
 
             foreach (DataRow row in sqlDt.Rows)
             {
-                if(Convert.ToInt32(row["employeeID"]) == Convert.ToInt32(employeeID))
+                try
                 {
-                    Note tempNote = new Note();
+                    if (Convert.ToInt32(row["employeeID"]) == Convert.ToInt32(employeeID))
+                    {
+                        Note tempNote = new Note();
 
-                    tempNote.ManagerID = row["ManagerID"].ToString();
+                        tempNote.ManagerID = row["ManagerID"].ToString();
 
-                    tempNote.Date = row["note_date"].ToString();
-                    tempNote.Subject = row["note_subject"].ToString();
-                    tempNote.Body = row["note_body"].ToString();
-                    string firstName = row["FName"].ToString();
-                    string lastName = row["LName"].ToString();
-                    tempNote.ManagerName = firstName + " " + lastName;
-                    tempNote.ManagerID = row["ManagerID"].ToString();
-                    tempNote.NoteID = row["noteID"].ToString();
-                    noteList.Add(tempNote);
+                        tempNote.Subject = row["note_subject"].ToString();
+                        tempNote.Body = row["note_body"].ToString();
+                        string firstName = row["FName"].ToString();
+                        string lastName = row["LName"].ToString();
+                        tempNote.ManagerName = firstName + " " + lastName;
+                        tempNote.ManagerID = row["ManagerID"].ToString();
+                        tempNote.NoteID = row["noteID"].ToString();
+                        tempNote.EmployeeID = row["EmployeeID"].ToString();
+                        noteList.Add(tempNote);
+                    }
+                }
+                catch(Exception e)
+                {
+
                 }
                 
             }
@@ -376,5 +386,26 @@ namespace Project2
         }
 
 
+        [WebMethod]
+        public Note GetNoteInfo(int id)
+        {
+            Note tempNote = new Note();
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            string sqlSelect = "SELECT * FROM manager_notes WHERE noteID = " + id;
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+            sqlDa.Fill(sqlDt);
+
+
+            tempNote.NoteID = sqlDt.Rows[0]["noteid"].ToString();
+            
+
+
+            return tempNote;
+        }
+
     }//end class
+
 }//end namespace*
