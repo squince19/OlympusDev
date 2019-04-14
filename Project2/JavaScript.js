@@ -77,7 +77,6 @@ function LoadEmployees(log) {
         dataType: "json",
         //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
-            alert("success");
             if (msg.d) {
 
                 employeeArray = msg.d;
@@ -119,13 +118,12 @@ function LoadChart() {
         success: function (msg) {
             if (msg.d.length > 0) {
                 tableArr = msg.d;
-                var table = document.createElement('table');
-                table.id = 'prodTable';
-                alert("Table created")
+                var table = document.getElementById('productivityTable');
                 for (var i = 0; i < tableArr.length; i++) {
                     var row = document.createElement('tr');
                     row.setAttribute("id", tableArr[0].employeeID);
-                    for (var j = 0; j <= 5; j++) {
+                    var j;
+                    for (j = 0; j <= 5; j++) {
                         var cell = document.createElement('td');
                         if (j == 0) {
                             cell.textContent = tableArr[i].lname + ", " + tableArr[i].fname;
@@ -133,21 +131,23 @@ function LoadChart() {
                         }
                         else if (j > 0) {
                             cell.setAttribute("id", "empData");
-                            if (tableArr[i].productivityLevel[j - 1] >= 80) {
-                                cell.bgColor = "Green";
+                            if (tableArr[i].productivityLevel[j - 1] >= 70) {
+                                cell.textContent = tableArr[i].productivityLevel[j - 1];
+                                cell.style.backgroundColor = "Green"
                             }
-                            else if (tableArr[i].productivityLevel[j - 1] < 80 && tableArr[i].productivityLevel[j - 1] >= 65) {
-                                cell.bgColor = "Yellow";
+                            else if (tableArr[i].productivityLevel[j - 1] < 70 && tableArr[i].productivityLevel[j - 1] >= 65) {
+                                cell.textContent = tableArr[i].productivityLevel[j - 1];
+                                cell.style.backgroundColor = "Yellow"
                             }
                             else if (tableArr[i].productivityLevel[j - 1] < 65) {
-                                cell.bgColor = "Red";
+                                cell.textContent = tableArr[i].productivityLevel[j - 1];
+                                cell.style.backgroundColor = "Red"
                             }
                         }
                         row.appendChild(cell);
                     }
                     table.appendChild(row);
                 }
-                document.getElementById('productivityTable').appendChild(table);
             }
             else {
                 alert("Error occurred loading graph");
