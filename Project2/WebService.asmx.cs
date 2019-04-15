@@ -68,7 +68,6 @@ namespace Project2
         [WebMethod(EnableSession = true)]
         public List<Employee> GetNames()
         { 
-            //WEB METHOD IN PROGRESS
             List<Employee> Employees = new List<Employee>();
 
             string sqlSelect = "";

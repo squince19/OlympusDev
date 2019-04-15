@@ -53,17 +53,17 @@ function GetNotes(employeeID) {
                     noteArray = msg.d;
                     for (i = 0; i < noteArray.length; i++) {
 
-                    console.log(noteArray[i].EmployeeID);
-                    var scrollBar = document.getElementById('notesScrollBar');
-                    var pNode = document.createElement('p');
-                    var value = noteArray[i].Subject;
-                    console.log(value);
+                        console.log(noteArray[i].EmployeeID);
+                        var scrollBar = document.getElementById('notesScrollBar');
+                        var pNode = document.createElement('p');
+
+                        var value = noteArray[i].Subject;            
+                        console.log(value);
                         pNode.setAttribute("id", "note" + noteArray[i].NoteID);
                         pNode.setAttribute("class", "noteClass");
-                    pNode.setAttribute("onclick", "DisplayNoteInfo(" + noteArray[i] + ")");
-
-                    pNode.innerHTML = value;
-                    scrollBar.appendChild(pNode);
+                        pNode.setAttribute("onclick", "DisplayNoteInfo(" + noteArray[i] + ")");
+                        pNode.innerHTML = value;
+                        scrollBar.appendChild(pNode);
             }
         }
         else {
@@ -108,23 +108,17 @@ function GetInfo(employeeID) {
     });
 }
 
-//Test function
-//function hello() {
-//    console.log("hey there");
-//}
 
 var employeeArray;
 
-
-function LoadEmployees(log) {
+//loads all employees in left side bar
+function LoadEmployees() {
     var webMethod = "WebService.asmx/GetNames";
     $.ajax({
         type: "POST",
         url: webMethod,
-        data: log,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
             if (msg.d) {
 
@@ -163,7 +157,7 @@ function LoadChart() {
         type: "POST",
         url: webMethod,
         contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        //dataType: "json",
         //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
             if (msg.d.length > 0) {
