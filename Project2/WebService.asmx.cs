@@ -70,6 +70,66 @@ namespace Project2
             return Session["MgrName"].ToString();
         }
 
+        [WebMethod(EnableSession = true)]
+        public List<Employee> GetAllNames()
+        {
+            List<Employee> Employees = new List<Employee>();
+
+            string sqlSelect = "";
+            string sqlSelect2 = "";
+            string userID = "";
+
+            int mgrID = 0;
+
+            sqlSelect = "SELECT DISTINCT FName, LName, employeeID, ManagerID from employee_data;";
+            
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+            sqlDa.Fill(sqlDt);
+
+            int count = sqlDt.Rows.Count;
+
+
+            foreach(DataRow row in sqlDt.Rows)
+            {
+                Employee tempEmployee = new Employee();
+                tempEmployee.fname = row["FName"].ToString();
+                tempEmployee.lname = row["LName"].ToString();
+                tempEmployee.ManagerID = Convert.ToInt32(row["ManagerID"]);
+                mgrID = tempEmployee.ManagerID;
+
+                sqlSelect2 = "SELECT FName, LName from employee_data where employeeID = " + tempEmployee.ManagerID;
+          
+                tempEmployee.employeeId = Convert.ToInt32(row["employeeID"]);
+                string sqlConnectString2 = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+                MySqlConnection sqlConnection2 = new MySqlConnection(sqlConnectString2);
+                MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnection2);
+
+                MySqlDataAdapter sqlDa2 = new MySqlDataAdapter(sqlCommand2);
+                DataTable sqlDt2 = new DataTable();
+                sqlDa2.Fill(sqlDt2);
+
+                try
+                {
+                    string managerFirstName = sqlDt2.Rows[0]["FName"].ToString();
+                    string managerLastName = sqlDt2.Rows[0]["LName"].ToString();
+                    tempEmployee.ManagerName = managerFirstName + " " + managerLastName;
+                }
+                catch (Exception e)
+                {
+
+                }
+
+                Employees.Add(tempEmployee);
+            }
+            return Employees;
+
+        }
+
         //FINISHED
         //THIS RUNS WHEN THEPAGE IS LOADED, AND RETURNS A LIST OF EMPLOYEES FROM A SPECIFIC MANAGER
         [WebMethod(EnableSession = true)]

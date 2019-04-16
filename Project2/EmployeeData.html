@@ -214,8 +214,8 @@ white-space:pre; font-size: 20px; line-height: 40px;"></h2>
         <div class="column" id="employeeData">
             <h3>Employees</h3>
             <div id="employeeScrollBar" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
-                <span style="display: inline-block; width: 49%"><p id="allBtn" style="margin-left:0px;">All</p></span>
-                <span style="display: inline-block; width: 49%;" id="span__color"><p style="margin-left:0px">Mine</p>   </span>  
+                <span style="display: inline-block; width: 49%"><p id="allBtn" onclick="LoadAllEmployees()" style="margin-left:0px;">All</p></span>
+                <span style="display: inline-block; width: 49%;" id="span__color"><p onclick="LoadEmployees()" style="margin-left:0px">Mine</p>   </span>  
             </div>
         </div>
         <div id="addNotes" class="modal">
@@ -300,6 +300,5 @@ white-space:pre; font-size: 20px; line-height: 40px;"></h2>
 
     function LoadPage() {
         LoadEmployees();
-        LoadChart();
     }
 </script>

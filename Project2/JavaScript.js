@@ -169,8 +169,63 @@ function GetInfo(employeeID) {
 
 var employeeArray;
 
+function LoadAllEmployees() {
+    LoadChart(false);
+    var paras = document.getElementsByClassName('empClass');
+    while (paras[0]) {
+        paras[0].parentNode.removeChild(paras[0]);
+    }
+
+    var webMethod = "WebService.asmx/GetAllNames";
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d) {
+                GetName();
+                var nameInsert = window.localStorage.getItem('ManagerName');
+                var greeting = "Welcome, " + nameInsert + "!";
+                document.getElementById('welcomeGreeting').innerHTML = greeting;
+                console.log(nameInsert);
+                employeeArray = msg.d;
+                for (i = 0; i < employeeArray.length; i++) {
+                    console.log(employeeArray[i].employeeId);
+                    var scrollBar = document.getElementById('employeeScrollBar');
+                    var pNode = document.createElement('p');
+                    var value = employeeArray[i].employeeId;
+                    console.log(value);
+                    pNode.setAttribute("id", value);
+                    pNode.setAttribute("onclick", "GetInfo(" + value + ")");
+                    pNode.setAttribute("class", "empClass");
+                    pValue = employeeArray[i].fname + " " + employeeArray[i].lname;
+                    pNode.innerHTML = pValue;
+                    scrollBar.appendChild(pNode);
+
+                }
+            }
+            else {
+                alert("Login Failed. Wrong username or password")
+            }
+        },
+        error: function (e) {
+            alert("boo...");
+        }
+    });
+
+}
+
 //loads all employees in left side bar
 function LoadEmployees() {
+
+    LoadChart(true);
+    var paras = document.getElementsByClassName('empClass');
+    while (paras[0]) {
+        paras[0].parentNode.removeChild(paras[0]);
+
+    }
+
     var webMethod = "WebService.asmx/GetNames";
     $.ajax({
         type: "POST",
@@ -213,17 +268,20 @@ function LoadEmployees() {
 
 //fucntion for EmployeeGraph
 var tableArr;
-function LoadChart() {
+function LoadChart(letters) {
+    var table1 = document.getElementById('productivityTable');
+    clearResultsTable(table1);
+
     var webMethod = "WebService.asmx/EmployeeGraph";
-    console.log(window.localStorage.getItem('LogOn'));
-    var letters = false;
-    if (window.localStorage.getItem('LogOn') == null) {
-        letters = false;
-    }
-    else if (window.localStorage.getItem('LogOn') != null) {
-        letters = true;
-    }
-    console.log(letters);
+    //console.log(window.localStorage.getItem('LogOn'));
+    //var letters = false;
+    //if (window.localStorage.getItem('LogOn') == null) {
+    //    letters = false;
+    //}
+    //else if (window.localStorage.getItem('LogOn') != null) {
+    //    letters = true;
+    //}
+    //console.log(letters);
     var parameters = "{\"truefalse\":\"" + encodeURI(letters) + "\"}";
 
     $.ajax({
@@ -276,6 +334,14 @@ function LoadChart() {
         }
     });
 }
+
+function clearResultsTable(table) {
+    for (var i = table.rows.length; i > 1; i--) {
+        table.deleteRow(i - 1);
+
+    }
+}
+
 
 
 
