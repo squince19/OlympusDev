@@ -200,7 +200,7 @@ border-width: 0px; border-radius: 5px;"type="text" name="name" placeholder="Sear
 
 
      <h2 id="welcomeGreeting" style="height: 45px; width: 30%; margin-left:50px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black; background-image: linear-gradient(360deg,orange 8%, white 0); 
-white-space:pre; font-size: 20px; line-height: 40px;">   Welcome, [Insert Manager Name Here]</h2>
+white-space:pre; font-size: 20px; line-height: 40px;"></h2>
     <!-- Div for formatting page content -->
     <div class="columnContainer">
         <div class="column" id="employeeData">
@@ -261,17 +261,13 @@ white-space:pre; font-size: 20px; line-height: 40px;">   Welcome, [Insert Manage
         <div class="column" id="managerNotes">
             <h3>Manager Notes</h3>
             <div style="width:100%; height:500px;line-height:3em;overflow-y:auto;">
-                <Label id="empNameLbl">Name</Label>
+                <h3 id="empNameLbl">Name</h3>
                 <p id="employeeName"></p>
-                <br />
-                <Label id="departmentLbl">Department</Label>
+                <h3 id="departmentLbl">Department</h3>
                 <p id="deptName"></p>
-                <br />
                 <p id="prod"></p>
-                <br />
-                <p id="notes">Notes:</p>
+                <h3 id="notes">Notes:</h3>
                 <div id="notesScrollBar" style="width:100%;height:500px;line-height:3em;overflow-y:auto;">
-                    <p>[sample note]</p>
                 </div>
 
                     <p id="addNoteBtn" onclick="document.getElementById('addNotes').style.display='block'">Create Note</p>

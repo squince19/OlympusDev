@@ -8,6 +8,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Data;
 
+
 namespace Project2
 {
     /// <summary>
@@ -43,7 +44,7 @@ namespace Project2
         {
             bool success = false;
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
-            string sqlSelect = "SELECT username, userPassword, employeeID FROM users WHERE username=@idValue and userPassword=@passValue";
+            string sqlSelect = "SELECT username, userPassword, employeeID, FName, LName FROM users WHERE username=@idValue and userPassword=@passValue";
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(username));
@@ -56,11 +57,17 @@ namespace Project2
             {
                 Session["loggedIn"] = "true";
                 Session["userID"] = sqlDt.Rows[0]["employeeID"];
+                string name = sqlDt.Rows[0]["Fname"] + " " + sqlDt.Rows[0]["LName"];
+                Session["MgrName"] = name;
                 success = true;
             }
-
             return success;
-
+        }
+        
+        [WebMethod(EnableSession = true)]
+        public string ManagerName()
+        {
+            return Session["MgrName"].ToString();
         }
 
         //FINISHED
@@ -187,12 +194,18 @@ namespace Project2
         //NEED TO REVIEW DATABASE TO CHECK FOR INVALID DATA
         //INVALID DATA FOR JOSEPH LOCK
         [WebMethod(EnableSession = true)]
-        public List<Employee> EmployeeGraph()
+        public List<Employee> EmployeeGraph(string truefalse)
         {
+            bool success = false;
+            if (truefalse == "true")
+            {
+                success = true;
+            }
+            
             //accepts bool
             //if it accepts true, then it will get a list of employees for just a manager
             //if it accepts false, then it will get ALL employees
-            bool success = false;
+            //bool success = truefalse;
             List<Employee> employeeInfo = new List<Employee>();
             int date = 7;
             int employeeCount;
@@ -382,7 +395,7 @@ namespace Project2
             }
 
                 return noteList;
-        }
+        } //end note method
 
 
         [WebMethod]

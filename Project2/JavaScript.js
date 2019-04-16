@@ -1,12 +1,8 @@
-﻿sessionStorage.setItem('logOn', 'false');
-var log = sessionStorage.getItem('logOn');
-log = false;
-
+﻿
 function LogOn(username, userPassword) {
  
     var webMethod = "WebService.asmx/LogOn";
     var parameters = "{\"username\":\"" + encodeURI(username) + "\",\"userPassword\":\"" + encodeURI(userPassword) + "\"}";
-    var LogOn = sessionStorage.getItem('LogOn');
 
     $.ajax({
         type: "POST",
@@ -18,11 +14,8 @@ function LogOn(username, userPassword) {
         success: function (msg) {
             if (msg.d) {
                 window.location.href = 'EmployeeData.html';
-                sessionStorage.setItem('logOn', 'true');
-                log = sessionStorage.getItem('logOn');
 
-
-                sessionStorage.setItem('LogOn') = true;
+                window.localStorage.setItem('LogOn', 'true');
             }
             else {
                 alert("Login Failed. Wrong username or password")
@@ -35,6 +28,20 @@ function LogOn(username, userPassword) {
     });
 }
 
+function GetName() {
+    webMethod = "WebService.asmx/ManagerName";
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        contentType: "application/json; charset=utf-8:",
+        dataType: "json",
+        success: function (msg) {
+            var name = msg.d;
+            window.localStorage.setItem('ManagerName', name);
+
+        }
+    })
+}
 var x = 0;
 
 function GetNotes(employeeID) {
@@ -48,7 +55,6 @@ function GetNotes(employeeID) {
         contentType: "application/json; charset=utf-8:",
         dataType: "json",
         success: function(msg) {
-            //$(".empClass").click(function () { removeChild(); });
                 if (msg.d) {
                     noteArray = msg.d;
                     for (i = 0; i < noteArray.length; i++) {
@@ -82,12 +88,18 @@ function DisplayNoteInfo(id) {
 }
 
 function GetInfo(employeeID) {
+
+    var paras = document.getElementsByClassName('noteClass');
+    while (paras[0]) {
+        paras[0].parentNode.removeChild(paras[0]);
+        
+    }
     var webMethod = "WebService.asmx/GetEmployeeInformation";
     var parameters = "{\"employeeID\":\"" + encodeURI(employeeID) + "\"}";
     $.ajax({
         type: "POST",
         url: webMethod,
-        data:parameters,
+        data: parameters,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         //gets a response, it calls the function mapped to the success key here
@@ -121,7 +133,11 @@ function LoadEmployees() {
         dataType: "json",
         success: function (msg) {
             if (msg.d) {
-
+                GetName();
+                var nameInsert = window.localStorage.getItem('ManagerName');
+                var greeting = "Welcome, " + nameInsert + "!";
+                document.getElementById('welcomeGreeting').innerHTML = greeting;
+                console.log(nameInsert);
                 employeeArray = msg.d;
                 for (i = 0; i < employeeArray.length; i++) {
                     console.log(employeeArray[i].employeeId);
@@ -153,11 +169,23 @@ function LoadEmployees() {
 var tableArr;
 function LoadChart() {
     var webMethod = "WebService.asmx/EmployeeGraph";
+    console.log(window.localStorage.getItem('LogOn'));
+    var letters = false;
+    if (window.localStorage.getItem('LogOn') == null) {
+        letters = false;
+    }
+    else if (window.localStorage.getItem('LogOn') != null) {
+        letters = true;
+    }
+    console.log(letters);
+    var parameters = "{\"truefalse\":\"" + encodeURI(letters) + "\"}";
+
     $.ajax({
         type: "POST",
         url: webMethod,
+        data: parameters,
         contentType: "application/json; charset=utf-8",
-        //dataType: "json",
+        dataType: "json",
         //gets a response, it calls the function mapped to the success key here
         success: function (msg) {
             if (msg.d.length > 0) {
