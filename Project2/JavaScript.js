@@ -236,15 +236,15 @@ function LoadChart() {
                             cell.setAttribute("id", "empData");
                             if (tableArr[i].productivityLevel[j - 1] >= 70) {
                                 cell.textContent = tableArr[i].productivityLevel[j - 1];
-                                cell.style.backgroundColor = "Green"
+                                cell.style.backgroundColor = "#76C4AE";
                             }
                             else if (tableArr[i].productivityLevel[j - 1] < 70 && tableArr[i].productivityLevel[j - 1] >= 65) {
                                 cell.textContent = tableArr[i].productivityLevel[j - 1];
-                                cell.style.backgroundColor = "Yellow"
+                                cell.style.backgroundColor = "#ffdb00"
                             }
                             else if (tableArr[i].productivityLevel[j - 1] < 65) {
                                 cell.textContent = tableArr[i].productivityLevel[j - 1];
-                                cell.style.backgroundColor = "Red"
+                                cell.style.backgroundColor = "#DC143C"
                             }
                         }
                         row.appendChild(cell);
