@@ -95,7 +95,9 @@ function DisplayNoteInfo(id) {
         dataType: "json",
         success: function (msg) {
             if (msg.d) {
+                window.localStorage.removeItem('noteid');
                 var note = msg.d;
+                window.localStorage.setItem('noteid', note.NoteID); 
                 document.getElementById('addNotes').style.display = 'block';
                 document.getElementById('modalHeader').innerHTML = "Note Information";
                 document.getElementById('createBtn').style.display = 'none';
@@ -409,6 +411,34 @@ function CreateNoteModal() {
     document.getElementById('removeBtn').style.display = 'none';
     document.getElementById('saveBtn').style.display = 'none';
     document.getElementById('editBtn').style.display = 'none';
+
+}
+
+function RemoveNote() {
+    var webMethod = "WebService.asmx/RemoveNote";
+    var name = window.localStorage.getItem('noteid');
+
+    var parameters = "{\"noteid\":\"" + encodeURI(name) + "\"}";
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        //gets a response, it calls the function mapped to the success key here
+        success: function (msg) {
+            if (msg.d) {
+                document.getElementById('addNotes').style.display = 'none';
+            }
+            else {
+                alert("Login Failed. Wrong username or password")
+                console.log(test);
+            }
+        },
+        error: function (e) {
+            alert("boo...");
+        }
+    });
 
 }
 
