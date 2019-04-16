@@ -62,7 +62,7 @@
         h3 {
             text-align: center;
             margin: auto;
-            background-color: white;
+            background-color: transparent;
             padding-bottom: 15px;
             padding-top: 10px;
         }
@@ -215,7 +215,7 @@
         </h2>
         <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px; margin-top: 10px;" class="fa fa-home"></i></button>
         <button class="icon"><i style=" font-size: 24px; margin-top:10px; margin-left: 5px;" class="fa fa-navicon"></i></button>
-        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px; margin-top:15px; height:34px; opacity: .6; background-color: ghostwhite; 
+        <input id="searchBar" style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px; margin-top:15px; height:34px; opacity: .6; background-color: ghostwhite; 
 border-width: 0px; border-radius: 5px;"type="text" name="name" placeholder="Search..." />
         <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px; margin-top: 10px; background-color: #3B8686" class="fa fa-search"></i></button>
     </div>
@@ -262,10 +262,7 @@ white-space:pre; font-size: 20px; line-height: 40px;"></h2>
                         <button id="removeBtn" type="button">Remove</button>
                         <button id="saveBtn" type="button">Save</button>
                         <button id="cancelBtn" type="button" onclick="document.getElementById('addNotes').style.display='none'" class="cancelbtn">Cancel</button>
-                        <button id="createBtn" type="submit" onclick="createNote('note', $('#noteSubjectInput').val(), $('#noteBodyinput').val(), document.getElementById('addNotes').style.display='none')
-                            return false;" class="btn">
-                            Create
-                        </button>
+                        <button id="createBtn" type="submit" onclick="CreateNote()" class="btn">Create</button>
 
                     </div>
                 </div>
@@ -299,7 +296,7 @@ white-space:pre; font-size: 20px; line-height: 40px;"></h2>
                 <div id="notesScrollBar" style="width:100%;height:100px;line-height:3em;overflow-y:auto;">
                 </div>
 
-                    <p style="font-size: medium" id="addNoteBtn" onclick="document.getElementById('addNotes').style.display='block'">Create Note</p>
+                    <p style="font-size: medium" id="addNoteBtn" onclick="CreateNoteModal()">Create Note</p>
                     <br />
                 </div>
             </div>

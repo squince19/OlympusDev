@@ -96,10 +96,6 @@ function DisplayNoteInfo(id) {
         success: function (msg) {
             if (msg.d) {
                 var note = msg.d;
-                alert(note.ManagerID);
-                alert(note.Subject);
-                alert(note.Body);
-                alert("clicked!");
                 document.getElementById('addNotes').style.display = 'block';
                 document.getElementById('modalHeader').innerHTML = "Note Information";
                 document.getElementById('createBtn').style.display = 'none';
@@ -131,7 +127,9 @@ function DisplayNoteInfo(id) {
 }//END DisplayNoteInfo
 
 function GetInfo(employeeID) {
-
+    window.localStorage.removeItem('empid');
+    window.localStorage.setItem('empid', employeeID);
+    alert(window.localStorage.getItem('empid'));
     var paras = document.getElementsByClassName('noteClass');
     while (paras[0]) {
         paras[0].parentNode.removeChild(paras[0]);
@@ -273,15 +271,7 @@ function LoadChart(letters) {
     clearResultsTable(table1);
 
     var webMethod = "WebService.asmx/EmployeeGraph";
-    //console.log(window.localStorage.getItem('LogOn'));
-    //var letters = false;
-    //if (window.localStorage.getItem('LogOn') == null) {
-    //    letters = false;
-    //}
-    //else if (window.localStorage.getItem('LogOn') != null) {
-    //    letters = true;
-    //}
-    //console.log(letters);
+    
     var parameters = "{\"truefalse\":\"" + encodeURI(letters) + "\"}";
 
     $.ajax({
@@ -343,6 +333,82 @@ function clearResultsTable(table) {
 }
 
 function SearchEmployee() {
+    var webMethod = "WebService.asmx/SearchEmployee";
+    var name = document.getElementById('searchBar').value;
+    var parameters = "{\"name\":\"" + encodeURI(name) + "\"}";
+    var searchArray;
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8:",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d) {
+                searchArray = msg.d;
+                for (i = 0; i < searchArray.length; i++) {
+                    console.log(searchArray[i].fname);
+                }
+            }
+
+            else {
+                alert("FAIL :(");
+            }
+
+        },
+        error: function (e) {
+            alert("boo...");
+        }
+    });
+}
+
+function CreateNote() {
+    var webMethod = "WebService.asmx/CreateNote";
+    var body = document.getElementById('bodyTextBox').value;
+    var subject = document.getElementById('subjectTextBox').value;
+    var mgrid = document.getElementById('mgrIdTextBox').value;
+    var employeeid = window.localStorage.getItem('empid');
+
+    var parameters = "{\"body\":\"" + encodeURI(body) + "\",\"subject\":\"" + encodeURI(subject) + "\",\"mgrid\":\"" + encodeURI(mgrid) + "\",\"employeeID\":\"" + encodeURI(employeeid) +"\"}";
+
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        //gets a response, it calls the function mapped to the success key here
+        success: function (msg) {
+            if (msg.d) {
+                document.getElementById('addNotes').style.display = 'none';
+            }
+            else {
+                alert("Login Failed. Wrong username or password")
+                console.log(test);
+            }
+        },
+        error: function (e) {
+            alert("boo...");
+        }
+    });
+
+
+}
+
+function CreateNoteModal() {
+    document.getElementById('addNotes').style.display = 'block';
+    document.getElementById('subjectTextBox').value = "";
+    document.getElementById('bodyTextBox').value = "";
+
+    document.getElementById('mgrIdTextBox').disabled = false;
+    document.getElementById('subjectTextBox').disabled = false;
+    document.getElementById('bodyTextBox').disabled = false;
+
+    document.getElementById('modalHeader').innerHTML = "New Note";
+    document.getElementById('createBtn').style.display = 'inline';
+    document.getElementById('removeBtn').style.display = 'none';
+    document.getElementById('saveBtn').style.display = 'none';
+    document.getElementById('editBtn').style.display = 'none';
 
 }
 
