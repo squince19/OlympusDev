@@ -96,9 +96,24 @@ function DisplayNoteInfo(id) {
         success: function (msg) {
             if (msg.d) {
                 var note = msg.d;
+                alert(note.ManagerID);
+                alert(note.Subject);
+                alert(note.Body);
                 alert("clicked!");
                 document.getElementById('addNotes').style.display = 'block';
-                //document.getElementById('')
+                document.getElementById('modalHeader').innerHTML = "Note Information";
+                document.getElementById('createBtn').style.display = 'none';
+                document.getElementById('removeBtn').style.display = 'inline';
+                document.getElementById('saveBtn').style.display = 'none';
+                document.getElementById('editBtn').style.display = 'inline';
+
+                document.getElementById('mgrIdTextBox').value = note.ManagerID;
+                document.getElementById('subjectTextBox').value = note.Subject;
+                document.getElementById('bodyTextBox').value = note.Body;
+
+                document.getElementById('mgrIdTextBox').disabled = true;
+                document.getElementById('subjectTextBox').disabled = true;
+                document.getElementById('bodyTextBox').disabled = true;
 
                 
             }
@@ -113,7 +128,7 @@ function DisplayNoteInfo(id) {
         }
     });
 
-}
+}//END DisplayNoteInfo
 
 function GetInfo(employeeID) {
 
