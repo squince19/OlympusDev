@@ -219,24 +219,29 @@ white-space:pre; font-size: 20px; line-height: 40px;"></h2>
                     <h2 style="text-align:center; margin-left: auto; background-color: #fff5e6;">Create Note</h2>
 
                     <!--<div class="noteCreate" style="display: inline-block;">
-                        <input type ="text" name="noteSubject" onchange="displayField()" value="student"><b>Student</b>
-                        <input type="text" name="noteBody" onchange="displayField()" id="radioTutor" value="tutor"><b>Tutor</b>
-                    </div>-->
+        <input type ="text" name="noteSubject" onchange="displayField()" value="student"><b>Student</b>
+        <input type="text" name="noteBody" onchange="displayField()" id="radioTutor" value="tutor"><b>Tutor</b>
+    </div>-->
 
                     <br>
                     <br>
+                    <label style="width: 25%; margin-right: 15px;" for="noteMgrId"><b style="margin-left: 10px; background: #fff5e6;">Manager ID</b></label>
+                    <input style="width: 75%; height: 35px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;" type="text" placeholder="16" id="managerIdInput" name="noteManagerId" required>
 
-                    <label style="width: 25%; margin-right: 15px;"for="noteSubject"><b style="margin-left: 10px; background: #fff5e6;">Note Subject</b></label>
-                    <input style="width: 75%; height: 35px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;"type="text" placeholder="Enter Note Subject" id="noteSubjectInput" name="noteSubject" required>
+                    <label style="width: 25%; margin-right: 15px;" for="noteSubject"><b style="margin-left: 10px; background: #fff5e6;">Note Subject</b></label>
+                    <input style="width: 75%; height: 35px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;" type="text" placeholder="Enter Note Subject" id="noteSubjectInput" name="noteSubject" required>
                     <br />
-                    <label style="width: 25%; margin-right: 30px;"for="noteBody"><b style="margin-left: 10px; background: #fff5e6;">Note Body</b></label>
-                    <input style="width: 75%;"type="text" placeholder="Enter Note Body" id="noteBodyinput" name="noteBody" required>
+                    <label style="width: 25%; margin-right: 30px;" for="noteBody"><b style="margin-left: 10px; background: #fff5e6;">Note Body</b></label>
+                    <input style="width: 75%;" type="text" placeholder="Enter Note Body" id="noteBodyinput" name="noteBody" required>
 
                     <div class="clearfix">
+                        <button type="button" style="display: none">Edit</button>
+                        <button type="button" style="display: none">Remove</button>
                         <button type="submit" onclick="createNote('note', $('#noteSubjectInput').val(), $('#noteBodyinput').val(), document.getElementById('addNotes').style.display='none')
         return false;" class="btn">
-                            Create 
+                            Create
                         </button>
+                        
                         <button type="button" onclick="document.getElementById('addNotes').style.display='none'" class="cancelbtn">Cancel</button>
                     </div>
                 </div>

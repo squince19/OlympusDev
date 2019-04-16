@@ -36,7 +36,7 @@ namespace Project2
             DataTable sqlDt = new DataTable();
             sqlDa.Fill(sqlDt);
             return sqlDt.Rows.Count;
-        }
+        }//end NumberOfAccounts
 
         //FINSIHED
         [WebMethod(EnableSession = true)]
@@ -118,9 +118,7 @@ namespace Project2
 
                 if (Session["userID"] == null)
                 {
-
                     sqlSelect2 = "SELECT FName, LName from employee_data where employeeID = " + tempEmployee.ManagerID;
-
                 }
                 else if (Session["userID"] != null)
                 {
@@ -397,8 +395,37 @@ namespace Project2
                 return noteList;
         } //end note method
 
+        [WebMethod(EnableSession = true)]
+        public void CreateNote(string body, string subject, string mgrid, string employeeID)
+        {
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            string sqlSelect = "INSERT INTO manager_notes (ManagerID, EmployeeID, note_subject, note_body, note_date)" +
+            "VALUES('" + mgrid + "', '" + employeeID + "', '" + subject + "', '" + body + "', NOW())";
 
-        [WebMethod]
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlConnection.Open();
+            int row = sqlCommand.ExecuteNonQuery();
+            
+            sqlConnection.Close();
+
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void RemoveNote(string noteid)
+        {
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["olympusDB"].ConnectionString;
+            string sqlSelect = "DELETE FROM manager_notes where noteid = " + noteid + ";";
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlConnection.Open();
+            int row = sqlCommand.ExecuteNonQuery();
+            sqlConnection.Close();
+        }
+
+        [WebMethod(EnableSession = true)]
         public Note GetNoteInfo(int id)
         {
             Note tempNote = new Note();
@@ -412,11 +439,25 @@ namespace Project2
 
 
             tempNote.NoteID = sqlDt.Rows[0]["noteid"].ToString();
-            
+            tempNote.ManagerID = sqlDt.Rows[0]["ManagerID"].ToString();
+            tempNote.EmployeeID = sqlDt.Rows[0]["EmployeeID"].ToString();
+            tempNote.Subject = sqlDt.Rows[0]["note_subject"].ToString();
+            tempNote.Body = sqlDt.Rows[0]["note_body"].ToString();
 
+            string sqlSelect2 = "SELECT FName, LName from employee_data where EmployeeID = " + tempNote.ManagerID;
+            MySqlConnection sqlConnection2 = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnection2);
+            MySqlDataAdapter sqlDa2 = new MySqlDataAdapter(sqlCommand2);
+            DataTable sqlDt2 = new DataTable();
+            sqlDa2.Fill(sqlDt2);
+
+            string mgrName = sqlDt2.Rows[0]["Fname"].ToString() + " " + sqlDt2.Rows[0]["LName"].ToString();
+            tempNote.ManagerName = mgrName;
 
             return tempNote;
         }
+
+
 
     }//end class
 

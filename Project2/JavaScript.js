@@ -67,7 +67,7 @@ function GetNotes(employeeID) {
                         console.log(value);
                         pNode.setAttribute("id", "note" + noteArray[i].NoteID);
                         pNode.setAttribute("class", "noteClass");
-                        pNode.setAttribute("onclick", "DisplayNoteInfo(" + noteArray[i] + ")");
+                        pNode.setAttribute("onclick", "DisplayNoteInfo(" + noteArray[i].NoteID + ")");
                         pNode.innerHTML = value;
                         scrollBar.appendChild(pNode);
             }
@@ -85,6 +85,34 @@ function GetNotes(employeeID) {
 }
 
 function DisplayNoteInfo(id) {
+    var webMethod = "WebService.asmx/GetNoteInfo";
+    var parameters = "{\"id\":\"" + encodeURI(id) + "\"}";
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8:",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d) {
+                var note = msg.d;
+                alert("clicked!");
+                document.getElementById('addNotes').style.display = 'block';
+                //document.getElementById('')
+
+                
+            }
+            
+            else {
+                alert("FAIL :(");
+            }
+
+        },
+        error: function (e) {
+            alert("boo...");
+        }
+    });
+
 }
 
 function GetInfo(employeeID) {
@@ -94,6 +122,9 @@ function GetInfo(employeeID) {
         paras[0].parentNode.removeChild(paras[0]);
         
     }
+    window.localStorage.removeItem('localEmployee');
+    window.localStorage.setItem('localEmployee', employeeID);
+    console.log(window.localStorage.getItem('localEmployee'));
     var webMethod = "WebService.asmx/GetEmployeeInformation";
     var parameters = "{\"employeeID\":\"" + encodeURI(employeeID) + "\"}";
     $.ajax({
