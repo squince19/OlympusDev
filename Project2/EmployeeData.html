@@ -12,7 +12,7 @@
     <style>
 
         * {
-            background-color: papayawhip;
+            background-color: #A8DBA8;
             font-family: Calibri;
             margin-top: 0;
             margin-left: 0;
@@ -71,11 +71,11 @@
             margin: 0px;
             padding: 0px;
             border: 0px;
-            background-color: #FF971A;
+            background-color: #A8DBA8;
         }
 
         i {
-            background-color: #FF971A;
+            background-color: #A8DBA8;
         }
 
         #managerNotes p, #managerNotes label {
@@ -95,15 +95,23 @@
         }
 
             #employeeData p:hover, p:hover#addNoteBtn {
-                background-color: #ffc966;
+                background-color: #CFF09E;
                 border-radius: 3px;
                 margin: 5px;
                 cursor: pointer;
             }
 
-        #span__color {
+            #notesScrollBar p:hover, p:hover#addNoteBtn {
+                background-color: #CFF09E;
+                border-radius: 3px;
+                margin: 5px;
+                cursor: pointer;
+            }
+
+
+        /*#span__color {
             background-color: #ffc966;
-        }
+        }*/
         #header button {
             display: inline-block;
             float: right;
@@ -113,7 +121,7 @@
 
         #header * {
             margin-bottom: 1px;
-            background-color: #FF971A;
+            background-color: #3B8686;
         }
 
         .clearfix button {
@@ -124,7 +132,7 @@
             border-width: 0;
             border-radius: 3px;
             margin-left: 10px;
-            background-color: #ffb347;
+            background-color: #CFF09E;
         }
 
             .clearfix button:hover {
@@ -143,6 +151,12 @@
             background-color: rgba(0,0,0,0.5);
             border-width: 0px;
             padding-top: 50px;
+            
+        }
+
+        .modal label {
+            background-color: #3B8686;
+            color: white;
         }
 
         .createNoteForm {
@@ -152,7 +166,7 @@
             max-height: 800px;
             padding: 16px;
             border-radius: 5px;
-            background-color: #fff5e6;
+            background-color: #3B8686;
         }
 
         #noteBodyinput {
@@ -161,7 +175,7 @@
             margin-top: 15px;
             border-width: 0px;
             border-radius: 3px;
-            background-color: white;
+            background-color: #798D9A;
         }
 
         #productivityTable {
@@ -185,7 +199,7 @@
             }
 
         .clearfix {
-            background-color: #fff5e6;
+            background-color: #3B8686;
             margin-top: 50px;
             margin-left: 20%;
         }
@@ -194,20 +208,20 @@
 <body onload="LoadPage()">
 
     <!-- Div for Navigation bar at top of page -->
-    <div id="header" style="background-color:#FF971A; height: 60px;">
-        <p style="margin-left: 15px; text-align: center; font-size: xx-large; color: darkslategray; display:inline-block; margin-right:25%; margin-top:10px;"><b>Olympus</b>PS</p>
-        <h2 style="text-align:center; margin-left:3%; display: inline-block; font-style: italic">
+    <div id="header" style="background-color: #3B8686; height: 60px;">
+        <p style="margin-left: 15px; text-align: center; font-size: xx-large; color: ghostwhite; display:inline-block; margin-right:25%; margin-top:10px;"><b>Olympus</b>PS</p>
+        <h2 style="text-align:center; color: ghostwhite; margin-left:3%; display: inline-block; font-style: italic">
             Manager Dashboard
         </h2>
         <button onclick="ChangeToHomePage()" class="icon"><i style=" font-size: 24px; margin-top: 10px;" class="fa fa-home"></i></button>
         <button class="icon"><i style=" font-size: 24px; margin-top:10px; margin-left: 5px;" class="fa fa-navicon"></i></button>
-        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px; margin-top:15px; height:34px; opacity: .6; background-color: wheat; 
+        <input style="float:right; padding-left: 20px; padding-right:100px; margin-right:25px; margin-left: 5px; margin-top:15px; height:34px; opacity: .6; background-color: ghostwhite; 
 border-width: 0px; border-radius: 5px;"type="text" name="name" placeholder="Search..." />
-        <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px; margin-top: 10px;" class="fa fa-search"></i></button>
+        <button onclick ="SearchEmployee()"class="icon"><i style=" font-size: 24px; margin-top: 10px; background-color: #3B8686" class="fa fa-search"></i></button>
     </div>
 
 
-     <h2 id="welcomeGreeting" style="height: 45px; width: 30%; margin-left:50px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black; background-image: linear-gradient(360deg,orange 8%, white 0); 
+     <h2 id="welcomeGreeting" style="height: 45px; width: 30%; margin-left:50px; margin-top: 30px; margin-bottom: 0px; padding-top: 0px; color:black; background-image: linear-gradient(360deg, #3B8686 8%, white 0); 
 white-space:pre; font-size: 20px; line-height: 40px;"></h2>
     <!-- Div for formatting page content -->
     <div class="columnContainer">
@@ -223,25 +237,25 @@ white-space:pre; font-size: 20px; line-height: 40px;"></h2>
 
             <!-- Create Account Modal Content -->
             <form action="" class="createNoteForm" style="overflow: auto;">
-                <div class="container" style="background-color: #fff5e6;">
+                <div class="container" style="background-color: #3B8686;">
                     <br>
-                    <h2 id="modalHeader" style="text-align:center; margin-left: auto; background-color: #fff5e6;">Create Note</h2>
+                    <h2 id="modalHeader" style="text-align:center; margin-left: auto; background-color: #3B8686;">Create Note</h2>
 
                     <!--<div class="noteCreate" style="display: inline-block;">
         <input type ="text" name="noteSubject" onchange="displayField()" value="student"><b>Student</b>
         <input type="text" name="noteBody" onchange="displayField()" id="radioTutor" value="tutor"><b>Tutor</b>
     </div>-->
-
+                    
                     <br>
                     <br>
-                    <label style="width: 25%; margin-right: 15px;" for="noteMgrId"><b style="margin-left: 10px; background: #fff5e6;">Manager ID</b></label>
+                    <label style="width: 25%; margin-right: 15px;" for="noteMgrId"><b style="margin-left: 10px; background: #3B8686;">Manager ID</b></label>
                     <input id="mgrIdTextBox" style="width: 75%; height: 35px; margin-left: 8px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;" type="text" placeholder="16" id="managerIdInput" name="noteManagerId" required>
 
-                    <label style="width: 25%; margin-right: 15px;" for="noteSubject"><b style="margin-left: 10px; background: #fff5e6;">Note Subject</b></label>
+                    <label style="width: 25%; margin-right: 15px;" for="noteSubject"><b style="margin-left: 10px; background: #3B8686;">Note Subject</b></label>
                     <input id="subjectTextBox" style="width: 75%; height: 35px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;" type="text" placeholder="Enter Note Subject" id="noteSubjectInput" name="noteSubject" required>
                     <br />
-                    <label style="width: 25%; margin-right: 30px;" for="noteBody"><b style="margin-left: 10px; background: #fff5e6;">Note Body</b></label>
-                    <input id="bodyTextBox" style="width: 75%; height: 100px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;"  type="text" placeholder="Enter Note Body" id="noteBodyinput" name="noteBody" required>
+                    <label style="width: 25%; margin-right: 30px;" for="noteBody"><b style="margin-left: 10px; background: #3B8686;">Note Body</b></label>
+                    <input id="bodyTextBox" style="width: 75%; height: 100px; margin-bottom: 10px; border-width: 0px; border-radius: 3px; background-color: white;" type="text" placeholder="Enter Note Body" id="noteBodyinput" name="noteBody" required>
 
                     <div class="clearfix">
                         <button id="editBtn" type="button">Edit</button>
@@ -285,7 +299,7 @@ white-space:pre; font-size: 20px; line-height: 40px;"></h2>
                 <div id="notesScrollBar" style="width:100%;height:100px;line-height:3em;overflow-y:auto;">
                 </div>
 
-                    <p id="addNoteBtn" onclick="document.getElementById('addNotes').style.display='block'">Create Note</p>
+                    <p style="font-size: medium" id="addNoteBtn" onclick="document.getElementById('addNotes').style.display='block'">Create Note</p>
                     <br />
                 </div>
             </div>

@@ -309,15 +309,15 @@ function LoadChart(letters) {
                             cell.setAttribute("id", "empData");
                             if (tableArr[i].productivityLevel[j - 1] >= 70) {
                                 cell.textContent = tableArr[i].productivityLevel[j - 1];
-                                cell.style.backgroundColor = "#76C4AE";
+                                cell.style.backgroundColor = "#CFFF9E";
                             }
                             else if (tableArr[i].productivityLevel[j - 1] < 70 && tableArr[i].productivityLevel[j - 1] >= 65) {
                                 cell.textContent = tableArr[i].productivityLevel[j - 1];
-                                cell.style.backgroundColor = "#ffdb00"
+                                cell.style.backgroundColor = "#FFED00"
                             }
                             else if (tableArr[i].productivityLevel[j - 1] < 65) {
                                 cell.textContent = tableArr[i].productivityLevel[j - 1];
-                                cell.style.backgroundColor = "#DC143C"
+                                cell.style.backgroundColor = "#FF576D"
                             }
                         }
                         row.appendChild(cell);
@@ -340,6 +340,10 @@ function clearResultsTable(table) {
         table.deleteRow(i - 1);
 
     }
+}
+
+function SearchEmployee() {
+
 }
 
 
